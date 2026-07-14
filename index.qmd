@@ -1,0 +1,31 @@
+---
+title: ""
+page-layout: custom
+title-block-banner: false
+
+listing:
+  id: recent-posts
+  contents: posts
+  type: grid
+  grid-columns: 2
+  fields: [date, title, description]
+  sort: "date desc"
+  categories: false
+  sort-ui: false
+  filter-ui: false
+---
+
+::: {.homepage}
+
+# Kareem Nayfeh
+
+Mechanical engineering student qwiouhiqouwqi wqirhqw iurqhqwuir hwqiur qwiukewquihqwiukerhqwuikeqw  iuqwhriuqwhr  uwqrh qi Mechanical engineering student qwiouhiqouwqi wqirhqw iurqhqwuir hwqiur qwiukewquihqwiukerhqwuikeqw  iuqwhriuqwhr  uwqrh qi Mechanical engineering student qwiouhiqouwqi wqirhqw iurqhqwuir hwqiur qwiukewquihqwiukerhqwuikeqw  iuqwhriuqwhr  uwqrh qi 
+
+## Recent Posts
+
+::: {#recent-posts}
+
+:::
+
+:::
+

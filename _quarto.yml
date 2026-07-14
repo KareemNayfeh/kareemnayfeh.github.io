@@ -1,0 +1,14 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  site-url: https://kareemnayfeh.github.io
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    include-before-body: sidebar.html
+    title-block-banner: false
+    title-block-style: none

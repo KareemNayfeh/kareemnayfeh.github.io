@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@200..900&display=swap');
+
+.quarto-title-banner {
+    background: rgb(13, 14, 15);
+}
+
+body {
+    background-color: rgb(13, 14, 15);
+    font-family: "Source Sans 3", sans-serif;
+    color: white;
+}
+
+.homepage {
+    width: 33%;
+    margin: 0 auto;
+    position: relative;
+    top: 10vh;
+    margin-top: 0;
+
+}
+.homepage h1  {
+    font-size: 72px;
+    text-align: left;
+    margin-top: 0px;
+}
+
+.homepage h2 {
+    border-bottom: none;
+    font-size: 32px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.homepage p {
+    font-size: 20px;
+}
+
+.homepage a {
+    color: rgb(255, 205, 69);
+}
+
+.homepage a:active {
+    color: rgb(252, 188, 13);
+}
+
+.sidebar {
+    position: fixed;
+    left: 16.75%;
+
+    width: 180px;
+    height: 100vh;
+    background-color: rgb(13, 14, 15);
+    margin-top: 0;
+
+}
+
+.sidebar h1 {
+    font-size: 20px;
+    margin-top: 10vh;
+}
+
+.sidebar p {
+    font-size: 16px;
+}
+
+.quarto-listing {
+    width: 100%;
+    margin: 40px auto 0;
+}
+
+.quarto-listing .card {
+    background-color: rgb(20, 21, 23);
+    transition: border-color 0.2s ease;
+}
+
+.quarto-listing .card:hover {
+    border-color: rgb(255, 205, 69);
+}
+
+.quarto-listing .card-title,
+.quarto-listing .card-title a {
+    color: white;
+    text-decoration: none;
+}
+
+.quarto-listing .card-text,
+.quarto-listing .listing-description {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+}
+
+.quarto-listing .listing-date,
+.quarto-listing .metadata {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+}
+
+main.content {
+  width: 33%;
+  margin: 0 auto;
+  position: relative;
+  top: 10vh;
+}
+
+#title-block-header{
+    display: none;
+}
