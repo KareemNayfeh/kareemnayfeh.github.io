@@ -19,10 +19,6 @@ listing:
 
 # Kareem Nayfeh
 
-Things I find interesting or useful about engineering.
-
-## Recent Posts
-
 ::: {#recent-posts}
 
 :::

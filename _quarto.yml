@@ -9,5 +9,4 @@ format:
   html:
     theme: cosmo
     css: styles.css
-    title-block-banner: false
-    title-block-style: none
+
