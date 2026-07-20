@@ -1,11 +1,10 @@
 ---
-title: "Center Axis of a Cylinder"
-description: "finding the center axis of a cylinder given radius and __ points"
+title: "Creating Coordinate Systems From CSV"
+description: "Inputting custom coordinate systems automatically"
 date: "2026-03-03"
 ---
 
 [Home](/)
 
-# ANSYS MECHANICAL AUTOMATION - Creating Coordinate Systems From CS
+# ANSYS Mechanical Automation: Coordinate Systems From CSV
 
-yo
