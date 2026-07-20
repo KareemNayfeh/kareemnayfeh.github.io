@@ -9,6 +9,5 @@ format:
   html:
     theme: cosmo
     css: styles.css
-    include-before-body: sidebar.html
     title-block-banner: false
     title-block-style: none
