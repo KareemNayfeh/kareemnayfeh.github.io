@@ -4,6 +4,8 @@ description: "finding the center axis of a cylinder given radius and __ points"
 date: "2026-03-03"
 ---
 
-finding it
+[Home](/)
 
-# hi
+# ANSYS MECHANICAL AUTOMATION - Creating Coordinate Systems From CS
+
+yo
