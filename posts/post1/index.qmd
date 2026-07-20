@@ -8,3 +8,4 @@ date: "2026-03-03"
 
 # ANSYS Mechanical Automation: Coordinate Systems From CSV
 
+Often times clients will provide CSV files with data about coordinates/directions.

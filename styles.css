@@ -90,10 +90,12 @@ main.content {
 }
 
 main.content h1{
-  font-size: 48px;
+  font-size: 32px;
   line-height: 1.0;
 }
-
+main.content p{
+    color: rgba(255, 255, 255, 0.8);
+}
 main.content > p:first-of-type {
     margin-bottom: 20px;
 }
