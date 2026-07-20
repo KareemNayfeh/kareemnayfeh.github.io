@@ -35,11 +35,11 @@ body {
     font-size: 20px;
 }
 
-.homepage a {
+a {
     color: rgb(255, 205, 69);
 }
 
-.homepage a:active {
+a:active {
     color: rgb(252, 188, 13);
 }
 
@@ -81,6 +81,8 @@ main.content {
   position: relative;
   top: 10vh;
 }
+
+
 
 #title-block-header{
     display: none;
