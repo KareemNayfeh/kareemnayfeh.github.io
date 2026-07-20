@@ -105,3 +105,30 @@ main.content {
 #title-block-header{
     display: none;
 }
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    main.content,
+    .post-content,
+    .homepage {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 24px;
+        box-sizing: border-box;
+    }
+
+    h1,
+    p {
+        width: 100%;
+    }
+
+    .quarto-listing-container-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
