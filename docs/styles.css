@@ -1,12 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@200..900&display=swap');
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-
-
-
-.quarto-title-banner {
-    background: rgb(13, 14, 15);
-}
 
 body {
     background-color: rgb(13, 14, 15);
@@ -14,14 +6,12 @@ body {
     color: white;
 }
 
-.homepage {
+#quarto-content > section.homepage {
     width: 33%;
     margin: 0 auto;
-    position: relative;
-    top: 10vh;
-    margin-top: 0;
-
+    padding-top: 10vh;
 }
+
 .homepage h1  {
     font-size: 72px;
     text-align: left;
@@ -82,14 +72,15 @@ a:active {
     font-size: 14px;
 }
 
-main.content {
-  margin: 0 auto;
-  position: relative;
-  top: 10vh;
-  
+#quarto-content > main.content {
+    margin: 0 auto;
+    padding-top: 10vh;
 }
 
-
+div.sourceCode {
+    background: transparent !important;
+    border: none !important;
+}
 main.content h1{
   font-size: 32px;
   line-height: 1.0;
@@ -111,19 +102,10 @@ main.content > p:first-of-type a {
     display: none;
 }
 
-.quarto-title-block .title {
-    font-size: 52px;
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -1.5px;
-    max-width: 760px;
-    margin-bottom: 18px;
-}
 
 @media (max-width: 768px) {
 
     main.content,
-    .post-content,
     .homepage {
         width: 100%;
         max-width: 100%;

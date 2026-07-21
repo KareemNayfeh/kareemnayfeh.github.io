@@ -9,4 +9,5 @@ format:
   html:
     theme: cosmo
     css: styles.css
-
+    highlight-style: a11y-dark
+    copy-code: true

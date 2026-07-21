@@ -9,4 +9,26 @@ date: "2026-03-03"
 
 # ANSYS Mechanical Automation: Coordinate Systems From CSV
 
-Often times clients will provide CSV files with data about coordinates/directions.
+Often times clients will provide CSV files with information; in this case, I was given coordinate a table with coordinate systems' locations and their names.
+
+To accomplish this, I went through by row (ignoring the first), and edited the coordinate system object per iteration:
+```python
+import csv
+
+cs = Model.CoordinateSystems
+
+file = '<PATH>'
+
+with open(file, 'r') as csvF:
+    reader = csv.reader(csvF)
+    next(reader)
+    
+    for x in reader:
+        newCS = cs.AddCoordinateSystem()
+        newCS.Name = r"""""" + x[0] 
+        newCS.OriginDefineBy = CoordinateSystemAlignmentType.Fixed
+        
+        newCS.OriginX = Quantity(float(x[1]), "m")
+        newCS.OriginY = Quantity(float(x[2]), "m")
+        newCS.OriginZ = Quantity(float(x[3]), "m")
+```

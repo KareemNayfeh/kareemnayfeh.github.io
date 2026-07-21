@@ -4,6 +4,6 @@
     "href": "posts/post1/index.html",
     "title": "Creating Coordinate Systems From CSV",
     "section": "",
-    "text": "Home\n\nANSYS Mechanical Automation: Coordinate Systems From CSV\nOften times clients will provide CSV files with data about coordinates/directions."
+    "text": "Home\n\nANSYS Mechanical Automation: Coordinate Systems From CSV\nOften times clients will provide CSV files with information; in this case, I was given coordinate a table with coordinate systems’ locations and their names.\nTo accomplish this, I went through by row (ignoring the first), and edited the coordinate system object per iteration:\nimport csv\n\ncs = Model.CoordinateSystems\n\nfile = '&lt;PATH&gt;'\n\nwith open(file, 'r') as csvF:\n    reader = csv.reader(csvF)\n    next(reader)\n    \n    for x in reader:\n        newCS = cs.AddCoordinateSystem()\n        newCS.Name = r\"\"\"\"\"\" + x[0] \n        newCS.OriginDefineBy = CoordinateSystemAlignmentType.Fixed\n        \n        newCS.OriginX = Quantity(float(x[1]), \"m\")\n        newCS.OriginY = Quantity(float(x[2]), \"m\")\n        newCS.OriginZ = Quantity(float(x[3]), \"m\")"
   }
 ]
