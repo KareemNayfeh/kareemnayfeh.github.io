@@ -89,15 +89,17 @@ main.content {
   
 }
 
+
 main.content h1{
   font-size: 32px;
   line-height: 1.0;
+  margin-top: 5px;
 }
 main.content p{
     color: rgba(255, 255, 255, 0.8);
 }
 main.content > p:first-of-type {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 main.content > p:first-of-type a {
