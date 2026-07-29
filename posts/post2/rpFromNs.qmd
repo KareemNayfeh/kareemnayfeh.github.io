@@ -1,0 +1,60 @@
+---
+title: "Creating RPs From NSs"
+description: "Remote point pairs formed at centroids of named selections"
+date: "2026-03-06"
+---
+
+
+[Home](/)
+
+# ANSYS Mechanical Automation - Remote Point Pairs from Named Selections
+
+For this project, I needed to represent a six-degree-of-freedom spring between tracks (stationary) and rollers (dynamic). This approach used pairs of remote points that had translational/rotational constraints and whose initial position was determined by the average between the centroids.
+
+If more pairs were required, it would definetly be worthwhile to replace the hardcoded filtering and function sequence with a dictionary that could be looped through.
+```python
+def avgOfCentroids(nsList):
+    pts = []
+    x = y = z = 0
+
+    for ns in nsList:
+        for id in ns.Location.Ids:
+            pts.append(ExtAPI.DataModel.GeoData.GeoEntityById(id).Centroid)
+
+    for p in pts:
+        x += p[0]
+        y += p[1]
+        z += p[2]
+    return x/len(pts), y/len(pts), z/len(pts)
+
+def createRPs(nsList):
+    coords = avgOfCentroids(nsList)
+    for ns in nsList:
+        c = Model.RemotePoints.AddRemotePoint()
+        c.Name = ns.Name
+        c.XCoordinate = Quantity(coords[0], "m")
+        c.YCoordinate = Quantity(coords[1], "m")
+        c.ZCoordinate = Quantity(coords[2], "m")
+        c.PilotNodeAPDLName = ns.Name
+
+        c.ScopingMethod = GeometryDefineByType.Component
+        c.Location = ns
+
+Ns = DataModel.GetObjectsByName("Named Selections")[0].Children
+
+xRollers = [x for x in Ns if "xRoller" in x.Name]
+zRollers = [x for x in Ns if "zRoller" in x.Name]
+xSensors = [x for x in Ns if "xSensor" in x.Name]
+zSensors = [x for x in Ns if "zSensor" in x.Name]
+zSprings = [x for x in Ns if "ySpring" in x.Name]
+thtaRollers = [x for x in Ns if "thRoller" in x.Name]
+
+createRPs(xRollers)
+createRPs(zRollers)
+createRPs(xSensors)
+createRPs(zSensors)
+createRPs(zSprings)
+createRPs(thtaRollers)
+
+```
+
