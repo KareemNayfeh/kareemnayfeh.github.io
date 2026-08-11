@@ -1,0 +1,29 @@
+---
+title: "Checking Units"
+description: "of active unit system ANSYS Mechanical"
+date: "2026-03-09"
+---
+
+[Home](/)
+
+# ANSYS Mechanical Automation: Checking Units
+
+One of the most tedious parts of automation in ANSYS is unit inconsistency. Rather than having to double check everything, I usually just use the below script as a mechanical snippet (the code is run every solve).
+
+In a case where the same script is used across multiple projects, consider placing a unit checker at the top of your code.
+```python
+# Accepted units: "m", "cm", "mm", or "um"
+unit = "mm"
+
+unitSystems = {
+    "m": MechanicalUnitSystem.StandardMKS,
+    "cm": MechanicalUnitSystem.StandardCGS,
+    "mm": MechanicalUnitSystem.StandardNMM,
+    "um": MechanicalUnitSystem.StandardUMKS
+}
+
+ExtAPI.Application.ActiveUnitSystem = unitSystems[unit]
+
+print("Active unit system:", unit)
+```
+
