@@ -1,17 +1,10 @@
 [
   {
-    "objectID": "posts/post1/index.html",
-    "href": "posts/post1/index.html",
-    "title": "Creating Coordinate Systems From CSV",
+    "objectID": "posts/post3/checkUnit.html",
+    "href": "posts/post3/checkUnit.html",
+    "title": "Checking Units",
     "section": "",
-    "text": "Home\n\nANSYS Mechanical Automation: Coordinate Systems From CSV\nOften times clients will provide CSV files with information; in this case, I was given coordinate a table with coordinate systems’ locations and their names.\nTo accomplish this, I went through by row (ignoring the first), and edited the coordinate system object per iteration:\nimport csv\n\ncs = Model.CoordinateSystems\n\nfile = '&lt;PATH&gt;'\n\nwith open(file, 'r') as csvF:\n    reader = csv.reader(csvF)\n    next(reader)\n    \n    for x in reader:\n        newCS = cs.AddCoordinateSystem()\n        newCS.Name = r\"\"\"\"\"\" + x[0] \n        newCS.OriginDefineBy = CoordinateSystemAlignmentType.Fixed\n        \n        newCS.OriginX = Quantity(float(x[1]), \"m\")\n        newCS.OriginY = Quantity(float(x[2]), \"m\")\n        newCS.OriginZ = Quantity(float(x[3]), \"m\")"
-  },
-  {
-    "objectID": "posts/post2/index.html",
-    "href": "posts/post2/index.html",
-    "title": "Finding The Center Axis of a Cylinder",
-    "section": "",
-    "text": "Home"
+    "text": "Home\n\nANSYS Mechanical Automation: Checking Units\nOne of the most tedious parts of automation in ANSYS is unit inconsistency. Rather than having to double check everything, I usually just use the below script as a mechanical snippet (the code is run every solve).\nIn a case where the same script is used across multiple projects, consider placing a unit checker at the top of your code.\n# Accepted units: \"m\", \"cm\", \"mm\", or \"um\"\nunit = \"mm\"\n\nunitSystems = {\n    \"m\": MechanicalUnitSystem.StandardMKS,\n    \"cm\": MechanicalUnitSystem.StandardCGS,\n    \"mm\": MechanicalUnitSystem.StandardNMM,\n    \"um\": MechanicalUnitSystem.StandardUMKS\n}\n\nExtAPI.Application.ActiveUnitSystem = unitSystems[unit]\n\nprint(\"Active unit system:\", unit)"
   },
   {
     "objectID": "posts/post1/csCoords.html",
@@ -21,24 +14,10 @@
     "text": "Home\n\nANSYS Mechanical Automation: Coordinate Systems From CSV\nOften times clients will provide CSV files with information; in this case, I was given coordinate a table with coordinate systems’ locations and their names.\nTo accomplish this, I went through by row (ignoring the first), and edited the coordinate system object per iteration:\nimport csv\n\ncs = Model.CoordinateSystems\n\nfile = '&lt;PATH&gt;'\n\nwith open(file, 'r') as csvF:\n    reader = csv.reader(csvF)\n    next(reader)\n    \n    for x in reader:\n        newCS = cs.AddCoordinateSystem()\n        newCS.Name = r\"\"\"\"\"\" + x[0] \n        newCS.OriginDefineBy = CoordinateSystemAlignmentType.Fixed\n        \n        newCS.OriginX = Quantity(float(x[1]), \"m\")\n        newCS.OriginY = Quantity(float(x[2]), \"m\")\n        newCS.OriginZ = Quantity(float(x[3]), \"m\")"
   },
   {
-    "objectID": "posts/post2/cylAxis.html",
-    "href": "posts/post2/cylAxis.html",
-    "title": "Finding The Center Axis of a Cylinder",
-    "section": "",
-    "text": "Home"
-  },
-  {
     "objectID": "posts/post2/rpFromNs.html",
     "href": "posts/post2/rpFromNs.html",
     "title": "Creating RPs From NSs",
     "section": "",
     "text": "Home\n\nANSYS Mechanical Automation - Remote Point Pairs from Named Selections\nFor this project, I needed to represent a six-degree-of-freedom spring between tracks (stationary) and rollers (dynamic). This approach used pairs of remote points that had translational/rotational constraints and whose initial position was determined by the average between the centroids.\nIf more pairs were required, it would definetly be worthwhile to replace the hardcoded filtering and function sequence with a dictionary that could be looped through.\ndef avgOfCentroids(nsList):\n    pts = []\n    x = y = z = 0\n\n    for ns in nsList:\n        for id in ns.Location.Ids:\n            pts.append(ExtAPI.DataModel.GeoData.GeoEntityById(id).Centroid)\n\n    for p in pts:\n        x += p[0]\n        y += p[1]\n        z += p[2]\n    return x/len(pts), y/len(pts), z/len(pts)\n\ndef createRPs(nsList):\n    coords = avgOfCentroids(nsList)\n    for ns in nsList:\n        c = Model.RemotePoints.AddRemotePoint()\n        c.Name = ns.Name\n        c.XCoordinate = Quantity(coords[0], \"m\")\n        c.YCoordinate = Quantity(coords[1], \"m\")\n        c.ZCoordinate = Quantity(coords[2], \"m\")\n        c.PilotNodeAPDLName = ns.Name\n\n        c.ScopingMethod = GeometryDefineByType.Component\n        c.Location = ns\n\nNs = DataModel.GetObjectsByName(\"Named Selections\")[0].Children\n\nxRollers = [x for x in Ns if \"xRoller\" in x.Name]\nzRollers = [x for x in Ns if \"zRoller\" in x.Name]\nxSensors = [x for x in Ns if \"xSensor\" in x.Name]\nzSensors = [x for x in Ns if \"zSensor\" in x.Name]\nzSprings = [x for x in Ns if \"ySpring\" in x.Name]\nthtaRollers = [x for x in Ns if \"thRoller\" in x.Name]\n\ncreateRPs(xRollers)\ncreateRPs(zRollers)\ncreateRPs(xSensors)\ncreateRPs(zSensors)\ncreateRPs(zSprings)\ncreateRPs(thtaRollers)"
-  },
-  {
-    "objectID": "posts/post3/checkUnit.html",
-    "href": "posts/post3/checkUnit.html",
-    "title": "Checking Units",
-    "section": "",
-    "text": "ANSYS Mechanical Automation: Checking Units\nOne of the most tedious parts of automation in ANSYS is unit inconsistency. Rather than having to double check everything, I usually just use the below script as a mechanical snippet (the code is run every solve).\nIn a case where the same script is used across multiple projects, consider placing a unit checker at the top of your code.\n# Accepted units: \"m\", \"cm\", \"mm\", or \"um\"\nunit = \"mm\"\n\nunitSystems = {\n    \"m\": MechanicalUnitSystem.StandardMKS,\n    \"cm\": MechanicalUnitSystem.StandardCGS,\n    \"mm\": MechanicalUnitSystem.StandardNMM,\n    \"um\": MechanicalUnitSystem.StandardUMKS\n}\n\nExtAPI.Application.ActiveUnitSystem = unitSystems[unit]\n\nprint(\"Active unit system:\", unit)"
   }
 ]
