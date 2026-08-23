@@ -1,11 +1,9 @@
 ---
 title: "Automating 6DOF Bushing Contacts"
 description: "Replacing expensive local contact models with automated 6DOF bushing connections in ANSYS Mechanical"
-date: "2026-06-18"
+last-edited: 2026-06-18
+favorite: true
 ---
-
-
-[Home](/)
 
 # ANSYS Mechanical Automation: Creating 6DOF Bushing Contacts
 

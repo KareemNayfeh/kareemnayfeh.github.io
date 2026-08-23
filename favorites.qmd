@@ -1,13 +1,15 @@
 ---
-title: "Everything"
+title: "Favorite Projects"
 page-layout: custom
 title-block-banner: false
 
 listing:
-  id: all-posts
+  id: favorite-posts
   contents: posts
   type: grid
   grid-columns: 2
+  include:
+    favorite: true
   fields: [title, description]
   field-types:
     last-edited: date
@@ -22,9 +24,8 @@ listing:
 # Kareem Nayfeh
 
 
-::: {#all-posts}
+::: {#favorite-posts}
 
 :::
 
 :::
-

@@ -1,11 +1,9 @@
 ---
 title: "Creating RPs From NSs"
 description: "Remote point pairs formed at centroids of named selections"
-date: "2026-03-06"
+last-edited: 2026-03-06
+favorite: false
 ---
-
-
-[Home](/)
 
 # ANSYS Mechanical Automation - Remote Point Pairs from Named Selections
 

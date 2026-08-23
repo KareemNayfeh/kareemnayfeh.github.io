@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Kareem Nayfeh</title>
+<title>Everything – Kareem Nayfeh</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -46,13 +47,13 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-eaeb381c6b7494c50009502241a4985c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-679c52be8fffa6622014d751905a4026.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9dc051fb26f5b4423c6967af0d3ebbfb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -77,20 +78,20 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-recent-posts .list');
+    const listingTargetEl = window.document.querySelector('#listing-all-posts .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-recent-posts'] = new List('listing-recent-posts', options);
+    window['quarto-listings']['listing-all-posts'] = new List('listing-all-posts', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -137,18 +138,36 @@ window.Quarto = {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+          <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Everything</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./favorites.html"> 
+<span class="menu-text">Favorite Projects</span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-layout-custom">
+<div id="quarto-content" class="quarto-container page-layout-custom page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
 <!-- main -->
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Kareem Nayfeh</h1>
+<h1 class="title">Everything</h1>
 </div>
 
 
@@ -165,11 +184,11 @@ window.Quarto = {
 </header>
 
 
-<section id="kareem-nayfeh" class="level1 homepage">
+<section id="kareem-nayfeh" class="level1 collection-page">
 <h1>Kareem Nayfeh</h1>
-<div id="listing-recent-posts" class="quarto-listing quarto-listing-container-grid">
+<div id="listing-all-posts" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-2">
-<div class="g-col-1" data-index="0" data-listing-date-sort="1781755200000" data-listing-file-modified-sort="1787072606224" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="743">
+<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1787513867684" data-listing-reading-time-sort="4" data-listing-word-count-sort="743" data-listing-last-edited-sort="2026-06-18">
 <a href="./posts/post4/bushingContact.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="card-body post-contents">
@@ -179,15 +198,10 @@ Automating 6DOF Bushing Contacts
 <div class="card-text listing-description delink">
 <p>Replacing expensive local contact models with automated 6DOF bushing connections in ANSYS Mechanical</p>
 </div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Jun 18, 2026
-</div>
-</div>
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-date-sort="1773028800000" data-listing-file-modified-sort="1786545245720" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="95">
+<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1787513868385" data-listing-reading-time-sort="1" data-listing-word-count-sort="95" data-listing-last-edited-sort="2026-03-09">
 <a href="./posts/post3/checkUnit.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="card-body post-contents">
@@ -197,15 +211,10 @@ Checking Units
 <div class="card-text listing-description delink">
 <p>of active unit system ANSYS Mechanical</p>
 </div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Mar 9, 2026
-</div>
-</div>
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="2" data-listing-date-sort="1772773200000" data-listing-file-modified-sort="1786544057261" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="315">
+<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1787515185299" data-listing-reading-time-sort="2" data-listing-word-count-sort="315" data-listing-last-edited-sort="2026-03-06">
 <a href="./posts/post2/rpFromNs.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="card-body post-contents">
@@ -215,15 +224,10 @@ Creating RPs From NSs
 <div class="card-text listing-description delink">
 <p>Remote point pairs formed at centroids of named selections</p>
 </div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Mar 6, 2026
-</div>
-</div>
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="3" data-listing-date-sort="1772514000000" data-listing-file-modified-sort="1786544057261" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="147">
+<div class="g-col-1" data-index="3" data-listing-file-modified-sort="1787513870245" data-listing-reading-time-sort="1" data-listing-word-count-sort="147" data-listing-last-edited-sort="2026-03-03">
 <a href="./posts/post1/csCoords.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="card-body post-contents">
@@ -232,11 +236,6 @@ Creating Coordinate Systems From CSV
 </h5>
 <div class="card-text listing-description delink">
 <p>Inputting custom coordinate systems automatically</p>
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Mar 3, 2026
-</div>
 </div>
 </div>
 </div></a>

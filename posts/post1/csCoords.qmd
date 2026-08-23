@@ -1,11 +1,9 @@
 ---
 title: "Creating Coordinate Systems From CSV"
 description: "Inputting custom coordinate systems automatically"
-date: "2026-03-03"
+last-edited: 2026-03-03
+favorite: false
 ---
-
-[Home](/)
-
 
 # ANSYS Mechanical Automation: Coordinate Systems From CSV
 

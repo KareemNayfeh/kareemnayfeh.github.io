@@ -1,10 +1,9 @@
 ---
 title: "Checking Units"
 description: "of active unit system ANSYS Mechanical"
-date: "2026-03-09"
+last-edited: 2026-03-09
+favorite: false
 ---
-
-[Home](/)
 
 # ANSYS Mechanical Automation: Checking Units
 

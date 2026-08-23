@@ -4,6 +4,21 @@ project:
 
 website:
   site-url: https://kareemnayfeh.github.io
+  title: "Kareem Nayfeh"
+  navbar:
+    title: false
+    background: "#0d0e0f"
+    foreground: light
+    search: false
+    collapse: false
+    left:
+      - text: "Everything"
+        href: index.qmd
+      - text: "Favorite Projects"
+        href: favorites.qmd
+
+filters:
+  - last-edited.lua
 
 format:
   html:

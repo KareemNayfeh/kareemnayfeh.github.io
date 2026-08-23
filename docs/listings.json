@@ -7,5 +7,11 @@
       "/posts/post2/rpFromNs.html",
       "/posts/post1/csCoords.html"
     ]
+  },
+  {
+    "listing": "/favorites.html",
+    "items": [
+      "/posts/post4/bushingContact.html"
+    ]
   }
 ]
