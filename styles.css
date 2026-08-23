@@ -219,7 +219,7 @@ main.content li {
 main.content img {
     max-width: 100%;
     height: auto;
-    border-radius: 12px;
+    border-radius: 0.25rem;
 }
 
 main.content figure {
@@ -236,8 +236,8 @@ div.sourceCode {
     max-width: 100%;
     margin-block: 1.5rem;
     overflow: hidden;
-    border: 1px solid var(--border) !important;
-    border-radius: 12px;
+    border: 0 !important;
+    border-radius: 0.25rem;
     background: transparent !important;
 }
 
