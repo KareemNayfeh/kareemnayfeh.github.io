@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="A build-your-own rigid-body mechanics sandbox">
 
-<title>Everything – Kareem Nayfeh</title>
+<title>2D Motion Lab – Kareem Nayfeh</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +37,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -75,70 +74,13 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-all-posts .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-all-posts'] = new List('listing-all-posts', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="simulator.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -146,12 +88,16 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
           <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Everything</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./favorites.html"> 
 <span class="menu-text">Favorite Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./simulator.html" aria-current="page"> 
+<span class="menu-text">Motion Lab</span></a>
   </li>  
 </ul>
           <div class="quarto-navbar-tools">
@@ -160,19 +106,26 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-layout-custom page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
+    
 <!-- main -->
+<main class="content page-columns page-full column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Everything</h1>
+<h1 class="title">2D Motion Lab</h1>
+</div>
+
+<div>
+  <div class="description">
+    A build-your-own rigid-body mechanics sandbox
+  </div>
 </div>
 
 
-
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -184,84 +137,150 @@ window.Quarto = {
 </header>
 
 
-<section id="kareem-nayfeh" class="level1 collection-page">
-<h1>Kareem Nayfeh</h1>
-<div id="listing-all-posts" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-2">
-<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1787596390649" data-listing-reading-time-sort="10" data-listing-word-count-sort="1889" data-listing-last-edited-sort="2026-08-24">
-<a href="./posts/post5/femmWrapper.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title" data-anchor-id="kareem-nayfeh">
-An Object-Oriented Python Wrapper for FEMM
-</h5>
-<div class="card-text listing-description delink">
-<p>Building repeatable magnetic simulations with models, materials, blocks, and coils instead of long procedural pyFEMM scripts</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1787513867684" data-listing-reading-time-sort="4" data-listing-word-count-sort="743" data-listing-last-edited-sort="2026-06-18">
-<a href="./posts/post4/bushingContact.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Automating 6DOF Bushing Contacts
-</h5>
-<div class="card-text listing-description delink">
-<p>Replacing expensive local contact models with automated 6DOF bushing connections in ANSYS Mechanical</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1787513868385" data-listing-reading-time-sort="1" data-listing-word-count-sort="95" data-listing-last-edited-sort="2026-03-09">
-<a href="./posts/post3/checkUnit.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Checking Units
-</h5>
-<div class="card-text listing-description delink">
-<p>of active unit system ANSYS Mechanical</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="3" data-listing-file-modified-sort="1787515185299" data-listing-reading-time-sort="2" data-listing-word-count-sort="315" data-listing-last-edited-sort="2026-03-06">
-<a href="./posts/post2/rpFromNs.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Creating RPs From NSs
-</h5>
-<div class="card-text listing-description delink">
-<p>Remote point pairs formed at centroids of named selections</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="4" data-listing-file-modified-sort="1787513870245" data-listing-reading-time-sort="1" data-listing-word-count-sort="147" data-listing-last-edited-sort="2026-03-03">
-<a href="./posts/post1/csCoords.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Creating Coordinate Systems From CSV
-</h5>
-<div class="card-text listing-description delink">
-<p>Inputting custom coordinate systems automatically</p>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
+<section class="motion-lab page-columns page-full" aria-labelledby="motion-lab-title">
+  <header class="motion-lab__intro">
+    <p class="motion-lab__eyebrow">Interactive mechanics</p>
+    <h1 id="motion-lab-title">Build a motion experiment.</h1>
+    <p>Combine individual bodies, supports, surfaces, springs, and rigid links. Set the initial motion, then explore gravity, collisions, rotation, inertia, restitution, and friction.</p>
+  </header>
+
+  <div class="sim-shell page-columns page-full">
+    <div class="sim-toolbar" aria-label="Simulation controls">
+      <div class="sim-toolbar__primary">
+        <button class="sim-button sim-button--accent" id="sim-play" type="button" aria-pressed="false">
+          <span class="sim-button__icon" aria-hidden="true">▶</span>
+          <span class="sim-button__label">Start</span>
+        </button>
+        <button class="sim-button" id="sim-reset" type="button">Reset</button>
+        <button class="sim-button" id="sim-capture" type="button">Set initial</button>
+        <button class="sim-button" id="sim-clear" type="button">Clear</button>
+      </div>
+      <div class="sim-toolbar__meta">
+        <label class="sim-speed" for="sim-speed">
+          <span>Speed</span>
+          <select id="sim-speed">
+            <option value="0.5">0.5×</option>
+            <option value="1" selected="">1×</option>
+            <option value="2">2×</option>
+          </select>
+        </label>
+        <span class="sim-time" id="sim-time" aria-live="polite">0.00 s</span>
+      </div>
+    </div>
+
+    <div class="sim-workbench page-columns page-full">
+      <aside class="sim-palette" aria-labelledby="sim-palette-title">
+        <div class="sim-panel-heading">
+          <span class="sim-panel-heading__step">01</span>
+          <div>
+            <h2 id="sim-palette-title" class="anchored">Pieces</h2>
+            <p>Drag or tap to place</p>
+          </div>
+        </div>
+
+        <p class="sim-palette__group">Moving bodies</p>
+
+        <button class="sim-component" type="button" draggable="true" data-piece-type="block" aria-label="Add a block">
+          <svg viewbox="0 0 72 48" aria-hidden="true"><rect class="component-block" x="18" y="10" width="36" height="28" rx="2"></rect><path class="component-detail" d="M26 24h20M36 16v16"></path></svg>
+          <span class="sim-component__copy"><strong>Block</strong><small>Translates + rotates</small></span>
+          <span class="sim-component__grab" aria-hidden="true">⠿</span>
+        </button>
+
+        <button class="sim-component" type="button" draggable="true" data-piece-type="ball" aria-label="Add a ball">
+          <svg viewbox="0 0 72 48" aria-hidden="true"><circle class="component-block" cx="36" cy="24" r="16"></circle><path class="component-detail" d="M36 12v24M24 24h24"></path></svg>
+          <span class="sim-component__copy"><strong>Ball</strong><small>Rolling + collisions</small></span>
+          <span class="sim-component__grab" aria-hidden="true">⠿</span>
+        </button>
+
+        <button class="sim-component" type="button" draggable="true" data-piece-type="beam" aria-label="Add a beam">
+          <svg viewbox="0 0 72 48" aria-hidden="true"><rect class="component-block" x="7" y="19" width="58" height="10" rx="2"></rect><circle class="component-detail-fill" cx="36" cy="24" r="2.5"></circle></svg>
+          <span class="sim-component__copy"><strong>Beam</strong><small>Visible rotational inertia</small></span>
+          <span class="sim-component__grab" aria-hidden="true">⠿</span>
+        </button>
+
+        <p class="sim-palette__group">Fixed pieces</p>
+
+        <button class="sim-component" type="button" draggable="true" data-piece-type="anchor" aria-label="Add a fixed anchor">
+          <svg viewbox="0 0 72 48" aria-hidden="true"><path class="component-support" d="M16 14h40M20 8l-6 6m17-6l-6 6m17-6l-6 6m17-6l-6 6"></path><circle class="component-joint" cx="36" cy="22" r="6"></circle><path class="component-line" d="M36 14v8"></path></svg>
+          <span class="sim-component__copy"><strong>Anchor</strong><small>Fixed connection point</small></span>
+          <span class="sim-component__grab" aria-hidden="true">⠿</span>
+        </button>
+
+        <button class="sim-component" type="button" draggable="true" data-piece-type="platform" aria-label="Add a fixed platform">
+          <svg viewbox="0 0 72 48" aria-hidden="true"><path class="component-support" d="M8 21h56M14 21L7 29m18-8l-7 8m18-8l-7 8m18-8l-7 8m18-8l-7 8"></path></svg>
+          <span class="sim-component__copy"><strong>Platform</strong><small>Fixed collision surface</small></span>
+          <span class="sim-component__grab" aria-hidden="true">⠿</span>
+        </button>
+
+        <p class="sim-palette__group">Connections</p>
+
+        <button class="sim-component" type="button" draggable="true" data-piece-type="spring" aria-label="Add a spring">
+          <svg viewbox="0 0 72 48" aria-hidden="true"><circle class="component-end" cx="8" cy="24" r="4"></circle><path class="component-line" d="M12 24h7l4-8 7 16 7-16 7 16 7-16 4 8h5"></path><circle class="component-end" cx="64" cy="24" r="4"></circle></svg>
+          <span class="sim-component__copy"><strong>Spring</strong><small>Drag ends to attach</small></span>
+          <span class="sim-component__grab" aria-hidden="true">⠿</span>
+        </button>
+
+        <button class="sim-component" type="button" draggable="true" data-piece-type="link" aria-label="Add a rigid link">
+          <svg viewbox="0 0 72 48" aria-hidden="true"><circle class="component-end" cx="10" cy="24" r="5"></circle><path class="component-line component-line--heavy" d="M15 24h42"></path><circle class="component-end" cx="62" cy="24" r="5"></circle></svg>
+          <span class="sim-component__copy"><strong>Rigid link</strong><small>Distance constraint</small></span>
+          <span class="sim-component__grab" aria-hidden="true">⠿</span>
+        </button>
+
+        <p class="sim-palette__hint"><strong>Connect pieces:</strong> add a spring or link, then drag each yellow endpoint onto a body or anchor.</p>
+      </aside>
+
+      <section class="sim-stage" aria-labelledby="sim-stage-title">
+        <div class="sim-stage__header">
+          <div>
+            <span class="sim-panel-heading__step">02</span>
+            <h2 id="sim-stage-title" class="anchored">Canvas</h2>
+          </div>
+          <div class="sim-stage__meta">
+            <span class="sim-count" id="sim-count">0 pieces · 0 connections</span>
+            <span class="sim-status" id="sim-status"><i aria-hidden="true"></i> Paused</span>
+          </div>
+        </div>
+        <div class="sim-canvas-wrap" id="sim-canvas-wrap">
+          <canvas id="sim-canvas" tabindex="0" aria-label="Interactive rigid-body mechanics canvas. Drag individual pieces here, then connect and simulate them."></canvas>
+          <div class="sim-empty" id="sim-empty">
+            <span aria-hidden="true">＋</span>
+            <strong>Drop individual pieces here</strong>
+            <small>Start with a body, platform, or anchor</small>
+          </div>
+          <div class="sim-canvas-message" id="sim-canvas-message" hidden=""></div>
+        </div>
+        <div class="sim-stage__footer">
+          <span><i class="legend-swatch legend-swatch--drag" aria-hidden="true"></i> Drag bodies to position or throw them</span>
+          <span><i class="legend-swatch legend-swatch--connector" aria-hidden="true"></i> Drag connector endpoints to snap</span>
+          <span><i class="legend-swatch legend-swatch--fixed" aria-hidden="true"></i> Hatched pieces are fixed</span>
+        </div>
+      </section>
+
+      <aside class="sim-inspector" aria-labelledby="sim-inspector-title">
+        <div class="sim-panel-heading">
+          <span class="sim-panel-heading__step">03</span>
+          <div>
+            <h2 id="sim-inspector-title" class="anchored">Properties</h2>
+            <p id="sim-selection-name">World settings</p>
+          </div>
+        </div>
+        <div class="sim-inspector__fields" id="sim-inspector-fields"></div>
+        <button class="sim-remove" id="sim-remove" type="button" hidden="">Remove selected piece</button>
+      </aside>
+    </div>
+
+    <p class="sim-announcement visually-hidden" id="sim-announcement" aria-live="polite"></p>
+  </div>
 </section>
 
+<script src="simulator.js"></script>
 
 
+<div class="last-edited">
+<p>Last edited: August 24, 2026</p>
+</div>
 
-
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

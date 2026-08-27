@@ -1,5 +1,8 @@
 {
   "listingMap": {
+    "favorites.qmd": [
+      "posts"
+    ],
     "index.qmd": [
       "posts"
     ]

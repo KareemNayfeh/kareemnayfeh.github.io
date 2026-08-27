@@ -1,0 +1,234 @@
+---
+title: "An Object-Oriented Python Wrapper for FEMM"
+description: "Building repeatable magnetic simulations with models, materials, blocks, and coils instead of long procedural pyFEMM scripts"
+last-edited: 2026-08-24
+favorite: false
+---
+
+# An Object-Oriented Python Wrapper for FEMM
+
+[Finite Element Method Magnetics (FEMM)](https://www.femm.info/) has a python scripting interface thats commands are procedural, meaning you establish something and then edit its attributes line by line  before moving onto somthing. This is useable for small scale projects but becomes unreadable and bulky fast. To overcome this, I wrote a small python femm wrapper to automate simulations for a paper I was part of.
+
+By organizing pyFEMM into objects, it becomes significantly easier to construct larger scale models. I will provide a short example at the end of this post for anyone looking to use it themselves.
+
+
+```python
+import femm
+import numpy as np
+
+class Model:
+    def __init__(self, symetric):
+        self.symetric = symetric
+        self.blocks = []
+        self.materials = []
+        
+        femm.openfemm() 
+        femm.newdocument(0)
+        
+        if symetric == True:
+            femm.mi_probdef(0,'millimeters','axi',1e-8,0,30);
+          
+        else:
+            femm.mi_probdef(0,'millimeters','planar',1e-8,0,30);
+
+    def addBlock(self, material, shape, coords, direction = 0, controlPoint = None, meshSize = None):
+        block = Block(self, str(material), shape, coords, direction, controlPoint, meshSize)
+        self.blocks.append(block)
+        return block
+
+    def copyRotateBlock(self,sourceBlock,centerX,centerY,angle):
+        print(sourceBlock.coords)
+        return 
+    
+    def drawAll(self):
+        for x in self.blocks:
+            x.draw()
+            
+    def solve(self):
+        femm.mi_saveas('solution.fem')
+        femm.mi_analyze()
+        femm.mi_loadsolution()
+                  
+    def getEnergyTable(self):
+
+        Energy = []
+        for x in self.blocks:
+  
+            Energy.append(x.getEnergy())
+        return np.array(Energy)
+                          
+    def createMaterial(self, matName, ux, uy, hC=0, j=0, cDuct=0, lamD=0, phiHMax=0, lam=0, phiHx=0, phiHy=0, nstr=0, dwire=0):
+        material = Material(matName, ux, uy, hC, j, cDuct, lamD, phiHMax, lam, phiHx, phiHy, nstr, dwire, True)
+        return material
+    
+    def loadMaterial(self, matName):
+        material = Material(matName)
+        return material
+    
+    def getForceOnBlocks(self,blockList):
+        femm.mo_clearblock()
+        for theBlock in blockList:
+            theBlock.selectBlock()
+
+        return(femm.mo_blockintegral(18),femm.mo_blockintegral(19))
+        
+    
+class Block:
+    def __init__(self, model, material, shape, coords = None, direction = 0, controlPoint = None, meshSize = None):
+        self.model = model
+        self.shape = shape
+        self.material = material
+        self.direction = direction
+        self.coords = coords
+        if controlPoint is not None:
+            print("assigning control point")
+            self.x = controlPoint[0]
+            print(self.x)
+            self.y = controlPoint[1]
+            print(self.y)
+            self.autoCenter= False
+        else:
+            self.autoCenter= True
+        if meshSize is not None:
+            self.autoMesh = 0
+            self.meshSize = meshSize
+            print('setting meshSize')
+        else:
+            self.autoMesh = 1
+            self.meshSize = 0
+            
+        
+    def getForce(self):
+        # this method only works for blocks abutting free space
+        femm.mo_clearblock()
+        femm.mo_selectblock(self.x, self.y)
+        # horizontal force, vertical force
+        return(femm.mo_blockintegral(18),femm.mo_blockintegral(19))
+    
+    def selectBlock(self):
+        femm.mo_selectblock(self.x,self.y)
+    
+    def getEnergy(self):
+        femm.mo_clearblock()
+        femm.mo_selectblock(self.x, self.y)
+        # energy, co-energy
+        return(femm.mo_blockintegral(2), femm.mo_blockintegral(17))
+    
+    def setCoords(self, coords):
+        self.coords = coords
+        femm.mo_sel
+    
+    def draw(self):
+        print(self.shape,self.material)
+        if (self.shape == 'coordlist'):
+            coords = self.coords
+            if len(self.coords)%2 == 0:
+                for i in range(0, len(coords), 2): 
+                    femm.mi_drawline(coords[i], coords[i+1], coords[(i+2)%len(coords)], coords[(i+3)%len(coords)])
+            xMax, yMax = max(coords[::2]), max(coords[1::2])
+            xMin, yMin = min(coords[::2]), min(coords[1::2])
+            if self.autoCenter:
+                self.x,self.y = xMin+0.5*(xMax-xMin), yMin+0.5*(yMax-yMin)
+        elif (self.shape == 'circle'):
+            centerx,centery,radius = self.coords[0],self.coords[1],self.coords[2]
+            femm.mi_drawarc(centerx,centery+radius,centerx,centery-radius, 180, 30)            
+            femm.mi_drawarc(centerx,centery-radius,centerx,centery+radius, 180, 30)
+            if self.autoCenter:
+                self.x,self.y = centerx,centery+0.95*radius
+        elif (self.shape == 'rectangle'):
+            centerx,centery,width,height = self.coords[0],self.coords[1],self.coords[2],self.coords[3]
+            femm.mi_drawrectangle(centerx-width/2,centery-height/2,centerx+width/2,centery+height/2)
+            if self.autoCenter:
+                self.x,self.y = centerx+0.49*width,centery+0.49*height
+        elif (self.shape == 'rectangle corners'):
+            femm.mi_drawrectangle(self.coords[0],self.coords[1],self.coords[2],self.coords[3])
+            if self.autoCenter:
+                width = (self.coords[2]-self.coords[0])
+                height = (self.coords[3]-self.coords[1])                
+                self.x,self.y = self.coords[0]+0.98*width,self.coords[1]+0.98*height  
+            
+        femm.mi_addblocklabel(self.x, self.y)
+        femm.mi_selectlabel(self.x, self.y)
+        femm.mi_setblockprop(self.material, self.autoMesh, self.meshSize, 0, self.direction, 0, 0)
+        femm.mi_clearselected()
+
+class Coil:
+    def __init__(self, material, coords, amperes):
+        self.material = material
+        self.coords = coords
+        self.amps = amperes
+    def draw(self):
+        centerx,centery,width,height = self.coords[0],self.coords[1],self.coords[2],self.coords[3]
+        femm.mi_drawrectangle(centerx-width/2,centery-height/2,centerx+width/2,centery+height/2)
+        self.x,self.y = centerx+0.49*width,centery+0.49*height
+        femm.mi_addcircprop('icoil', self.amps, 1);
+        femm.mi_addblocklabel(self.x, self.y)
+        femm.mi_selectlabel(self.x, self.y)
+        femm.mi_setblockprop(self.material, 0, 1, 'icoil', 0, 0, 200);
+        femm.mi_clearselected()
+
+class Material:
+    def __init__(self, matName=None, ux=None, uy=None, hC=None, j=None, cDuct=None, lamD=None, phiHMax=None, lam=None, phiHx=None, phiHy=None, nstr=None, dwire=None, create = False):
+        self.matName = matName
+        if create:
+            femm.mi_addmaterial(matName, ux, uy, hC, j, cDuct, lamD, phiHMax, lam, phiHx, phiHy, nstr, dwire)
+        else:
+            femm.mi_getmaterial(matName)
+            
+    def __str__(self):
+        return self.matName
+```
+## Example
+
+```python
+from femmModel import Model
+
+# Create an axisymmetric FEMM model
+model = Model(radius=50, symetric=True)
+
+# Load materials from FEMM's material library
+air = model.loadMaterial("Air")
+copper = model.loadMaterial("Copper")
+iron = model.loadMaterial("Pure Iron")
+
+# Create an air region
+airBlock = model.addBlock(
+    material=air,
+    shape="rectangle",
+    coords=[0, 0, 100, 100]
+)
+
+# Create an iron core
+core = model.addBlock(
+    material=iron,
+    shape="rectangle",
+    coords=[20, 0, 20, 50]
+)
+
+# Create a circular iron block
+disk = model.addBlock(
+    material=iron,
+    shape="circle",
+    coords=[40, 0, 10]
+)
+
+# Draw every block in the model
+model.drawAll()
+
+# Solve the FEMM model
+model.solve()
+
+# Get the force acting on the iron blocks
+fx, fy = model.getForceOnBlocks([core, disk])
+
+print("Force X:", fx)
+print("Force Y:", fy)
+
+# Get energy and co-energy for each block
+energyTable = model.getEnergyTable()
+
+print("\nEnergy Table:")
+print(energyTable)
+
+
+```

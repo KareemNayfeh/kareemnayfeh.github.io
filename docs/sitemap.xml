@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post4/bushingContact.html</loc>
-    <lastmod>2026-08-23T19:37:47.684Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/simulator.html</loc>
+    <lastmod>2026-08-24T15:53:13.689Z</lastmod>
   </url>
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post2/rpFromNs.html</loc>
-    <lastmod>2026-08-23T19:59:45.299Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kareemnayfeh.github.io/index.html</loc>
-    <lastmod>2026-08-23T19:56:20.596Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kareemnayfeh.github.io/favorites.html</loc>
-    <lastmod>2026-08-23T19:56:54.611Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/posts/post3/checkUnit.html</loc>
+    <lastmod>2026-08-23T19:37:48.385Z</lastmod>
   </url>
   <url>
     <loc>https://kareemnayfeh.github.io/posts/post1/csCoords.html</loc>
     <lastmod>2026-08-23T19:37:50.245Z</lastmod>
   </url>
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post3/checkUnit.html</loc>
-    <lastmod>2026-08-23T19:37:48.385Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/favorites.html</loc>
+    <lastmod>2026-08-23T19:56:54.611Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kareemnayfeh.github.io/index.html</loc>
+    <lastmod>2026-08-23T19:56:20.596Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kareemnayfeh.github.io/posts/post2/rpFromNs.html</loc>
+    <lastmod>2026-08-23T19:59:45.299Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kareemnayfeh.github.io/posts/post4/bushingContact.html</loc>
+    <lastmod>2026-08-23T19:37:47.684Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kareemnayfeh.github.io/posts/post5/femmWrapper.html</loc>
+    <lastmod>2026-08-24T18:33:10.649Z</lastmod>
   </url>
 </urlset>

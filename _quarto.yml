@@ -17,6 +17,7 @@ website:
       - text: "Favorite Projects"
         href: favorites.qmd
 
+
 filters:
   - last-edited.lua
 
