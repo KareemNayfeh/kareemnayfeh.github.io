@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="How analytical energy estimates, 2D and 3D field models, and a cylindrical experiment clarify the design of nearly constant-force magnetic springs">
+
+<title>Designing Passive Magnetic Springs with Energy-Based Models – Kareem Nayfeh</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-eaeb381c6b7494c50009502241a4985c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9dc051fb26f5b4423c6967af0d3ebbfb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+          <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Everything</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../favorites.html"> 
+<span class="menu-text">Favorite Projects</span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Designing Passive Magnetic Springs with Energy-Based Models</h1>
+                  <div>
+        <div class="description">
+          How analytical energy estimates, 2D and 3D field models, and a cylindrical experiment clarify the design of nearly constant-force magnetic springs
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="designing-passive-magnetic-springs-with-energy-based-models" class="level1">
+<h1>Designing Passive Magnetic Springs with Energy-Based Models</h1>
+<p>A vertical actuator should not have to spend energy continuously just to hold up a payload. A passive spring can carry that static load, leaving the actuator to handle motion and disturbance rejection. Conventional springs can do this, but their force usually changes with displacement. A well-designed magnetic spring can instead provide a nearly constant force over a useful range of travel, without contact between its moving parts.</p>
+<p>By utilizing the difference in magnetic energy between two cross sections, force may be estimated. That produces a useful design model before the expense of a full three-dimensional finite-element analysis (FEA). We then test the approach against 3D simulations and a physical cylindrical-magnet experiment.</p>
+<section id="the-design-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-design-problem">The design problem</h3>
+<p>A magnetic spring is not useful merely because two magnets attract or repel. Its force-displacement curve must suit the mechanism around it. For gravity compensation, the desired behavior is often a force that changes very little across the operating stroke.</p>
+<p>The presentation surveys several ways to create that behavior: normal-force arrangements, shear arrangements, iron-backed and ironless designs, magnet arrays, and push-pull configurations. It also highlights the quantities that a force-only design can miss: lateral stiffness, hysteresis, damping, temperature sensitivity, moving mass, and package size.</p>
+<p>The clearest example is a long permanent magnet that slides axially into a soft-magnetic tube. The magnet is polarized across its cross section, so this is a shear configuration: axial motion changes the overlap between magnet and tube without changing the radial air gap.</p>
+<div id="fig-sections" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide showing a rectangular magnet entering an iron tube, three cross-sectional regions, a magnetic circuit, and two-dimensional flux plots.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sections-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="magnetic-spring-sections.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide showing a rectangular magnet entering an iron tube, three cross-sectional regions, a magnetic circuit, and two-dimensional flux plots.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sections-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A long transversely poled magnet entering a soft-magnetic tube can be divided into nearly two-dimensional cross-sectional regions. The field plots and magnetic-circuit analogy are analytical and simulation tools, not measurements. Source: Verdirame et al., presentation slide 9.
+</figcaption>
+</figure>
+</div>
+<p>If the magnet and tube are sufficiently long, most of the device can be represented by three cross sections: an empty tube, a magnet inside the tube, and a magnet outside the tube. Only the entrance and exit are strongly three-dimensional. This separation is what makes the energy method practical.</p>
+</section>
+<section id="force-from-energy-per-unit-length" class="level3">
+<h3 class="anchored" data-anchor-id="force-from-energy-per-unit-length">Force from energy per unit length</h3>
+<p>Let (E_0) be the magnetic energy per unit axial length of the magnet outside the tube, and let (E_1) be the corresponding energy per unit length with the magnet inside the tube. Both have units of joules per meter, which is dimensionally equivalent to newtons.</p>
+<p>As the magnet advances by a small distance (du), one cross-sectional slice changes from the outside state to the inside state. The presentation therefore estimates the axial force magnitude as</p>
+<p><span class="math display">\[
+F \approx E_0-E_1.
+\]</span></p>
+<p>A useful interpretation is to write the total magnetic energy as a sum of the two regions. Increasing the overlap transfers length from the (E_0) region to the (E_1) region, so differentiating energy with respect to displacement produces their difference. No extra magnet length belongs in the force equation because each (E_i) is already an energy <em>per unit length</em>.</p>
+<p>For the rectangular tube model, the air-gap flux density is approximated with a magnetic circuit:</p>
+<p><span class="math display">\[
+B = B_r\frac{t/\mu_r}{t/\mu_r+2g},
+\]</span></p>
+<p>where (B_r) is the magnet remanence, (t) is its dimension along the poling direction, (g) is the one-sided air gap, and (mu_r) is the magnet recoil relative permeability. This relation assumes that the iron provides a sufficiently permeable return path. Thin or saturated iron violates that simplifying assumption.</p>
+<p>The presentation normalizes results by the reference energy per unit length</p>
+<p><span class="math display">\[
+E^*=\frac{B_r^2tw}{2\mu_r\mu_0},
+\]</span></p>
+<p>where (w) is the other cross-sectional dimension and (mu_0) is the permeability of free space. For the illustrated rectangular example, the stated values are (E^<em>=101&nbsp;), (E_0=0.55E^</em>=56&nbsp;), and (E_1=0.09E^*=9.1&nbsp;). Their rounded difference gives an <strong>estimated</strong> force of about (47&nbsp;). It is not an experimental result.</p>
+</section>
+<section id="why-the-force-is-flat-only-over-part-of-the-stroke" class="level3">
+<h3 class="anchored" data-anchor-id="why-the-force-is-flat-only-over-part-of-the-stroke">Why the force is flat only over part of the stroke</h3>
+<p>The cross-sectional estimate has no entrance or exit, so it predicts a constant force. A 3D model restores those end effects.</p>
+<div id="fig-fea" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide comparing a constant normalized force estimate with a displacement-dependent three-dimensional finite-element curve.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fea-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="magnetic-spring-fea.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide comparing a constant normalized force estimate with a displacement-dependent three-dimensional finite-element curve.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fea-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The dotted line is the energy-based estimate; the solid curve is 3D FEA. Agreement is strongest after entry and before the far end of the tube. Source: Verdirame et al., presentation slide 11.
+</figcaption>
+</figure>
+</div>
+<p>In the simulated curve, force rises as the magnet enters the tube, stays near (0.45E^*) across an intermediate region, and then falls as the magnet approaches the other end. The analytical estimate is therefore most useful for sizing the plateau force. Travel limits and end behavior still need a 3D calculation or a measurement.</p>
+<p>The same division of labor applies to the iron. If the wall is thick enough to remain below strong saturation, a magnetic circuit provides a quick estimate of (E_1). If the wall is too thin, local saturation increases the energy of the inside state and reduces the plateau force. The presentation recommends obtaining (E_1) from 2D FEA in that case.</p>
+<p>For the studied N52 magnet and 1018-steel rectangular geometry, the simulated force approaches a plateau once the wall thickness is about one-third of the magnet width. Larger air gaps reduce force. That one-third value is a configuration-specific sizing observation, not a universal rule for other steels, magnet grades, or geometries.</p>
+</section>
+<section id="iron-backed-and-ironless-designs" class="level3">
+<h3 class="anchored" data-anchor-id="iron-backed-and-ironless-designs">Iron-backed and ironless designs</h3>
+<p>Soft iron concentrates flux and increases force for a given magnet cross section, but it also brings saturation and hysteresis. An ironless design removes that major hysteretic material at the cost of more magnet volume for the same force.</p>
+<div id="fig-packaging" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide comparing iron-backed, split-magnet iron-backed, and enlarged ironless magnetic spring cross sections.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-packaging-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="magnetic-spring-packaging.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide comparing iron-backed, split-magnet iron-backed, and enlarged ironless magnetic spring cross sections.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-packaging-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The presentation’s equal-force packaging comparison. In the stated geometry, the iron-backed design reaches about (0.45E^<em>), while the three-magnet ironless arrangement reaches about (0.15E^</em>) for the same magnet-area normalization. Source: Verdirame et al., presentation slide 20.
+</figcaption>
+</figure>
+</div>
+<p>For the particular comparison shown, with (2g/t=0.1) and iron wall thickness (a=w/3), the iron-backed design produces approximately (0.45E^<em>). A three-magnet ironless layout produces approximately (0.15E^</em>) when normalized by the same total magnet area. Because (E^*) scales with magnet cross-sectional area, about three times the magnet area can recover similar force. If both linear dimensions are scaled together, that corresponds to a factor of (sqrt{3}).</p>
+<p>This is a packaging tradeoff, not a general claim that the alternatives have identical mass, cost, thermal behavior, or lateral stiffness. The design choice depends on whether compactness or low hysteresis matters more.</p>
+</section>
+<section id="the-cylindrical-experiment" class="level3">
+<h3 class="anchored" data-anchor-id="the-cylindrical-experiment">The cylindrical experiment</h3>
+<p>The physical test used a diametrically poled N52 cylindrical magnet: its magnetization points across the diameter rather than along its axis. The magnet was 6.35 mm in diameter and 25.4 mm long. It moved into a 25 mm-long 1018-steel tube with a 7 mm inner diameter and a 16 mm outer diameter.</p>
+<p>For a circular magnet of diameter (d), the presentation uses</p>
+<p><span class="math display">\[
+E^*=\frac{\pi d^2B_r^2}{8\mu_r\mu_0}, \qquad \frac{E_0}{E^*}=\frac{1}{2},
+\]</span></p>
+<p>and obtains (E_1/E^<em>) from 2D FEA. The reported reference scale for the test magnet is (E^</em>&nbsp;). The diameters imply a radial clearance of</p>
+<p><span class="math display">\[
+g=\frac{7-6.35}{2}=0.325\ \mathrm{mm},
+\]</span></p>
+<p>so (2g/d). This ratio is arithmetic derived from the stated dimensions, not a separate measurement.</p>
+<div id="fig-experiment" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide with a force-versus-insertion plot and photograph of the cylindrical magnetic spring experiment.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-experiment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="magnetic-spring-experiment.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide with a force-versus-insertion plot and photograph of the cylindrical magnetic spring experiment.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-experiment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The experimental apparatus and its force comparison. Blue is measurement, orange is 3D FEA, and the dotted yellow line is the constant 2D estimate. Source: Verdirame et al., presentation slide 24.
+</figcaption>
+</figure>
+</div>
+<p>The different evidence types should not be collapsed into one number:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Result</th>
+<th>Method</th>
+<th>What the presentation shows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(F0.42E^*&nbsp;)</td>
+<td>2D model</td>
+<td>A stated constant-force prediction</td>
+</tr>
+<tr class="even">
+<td>Peak/plateau near (11&nbsp;)</td>
+<td>3D FEA</td>
+<td>A displacement-dependent simulated curve with end effects</td>
+</tr>
+<tr class="odd">
+<td>Plateau roughly (10&nbsp;)</td>
+<td>Physical measurement</td>
+<td>An approximate visual reading of the plotted blue trace, which gradually declines with insertion</td>
+</tr>
+<tr class="even">
+<td>About (60&nbsp;), less than 1%</td>
+<td>Physical measurement</td>
+<td>The reported width of a force hysteresis loop over several millimeters of cycling</td>
+</tr>
+</tbody>
+</table>
+<p>The measurement confirms the intended order of magnitude and the existence of a broad force plateau. The plot does not provide raw data or uncertainty bounds, so it does not support an exact model-error percentage. The reported “less than 1%” refers to the measured hysteresis loop, not to agreement between simulation and experiment.</p>
+<div id="fig-hysteresis" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide showing the experiment's full force curve and a magnified measured hysteresis loop.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hysteresis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="magnetic-spring-hysteresis.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide showing the experiment's full force curve and a magnified measured hysteresis loop.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hysteresis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Repeated motion over part of the stroke produced a measured force loop of about 60 mN. The enlarged graph shows change in force, not the full axial force. Source: Verdirame et al., presentation slide 25.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="constant-axial-force-does-not-mean-lateral-stability" class="level3">
+<h3 class="anchored" data-anchor-id="constant-axial-force-does-not-mean-lateral-stability">Constant axial force does not mean lateral stability</h3>
+<p>The tube attracts an off-center magnet toward the nearest wall. That is a negative lateral stiffness: a small radial displacement produces a force that increases the displacement instead of restoring the magnet to center.</p>
+<div id="fig-lateral" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide showing off-center magnetic flux fields, lateral force, and lateral negative stiffness for a cylindrical magnet in a tube.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lateral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="magnetic-spring-lateral.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide showing off-center magnetic flux fields, lateral force, and lateral negative stiffness for a cylindrical magnet in a tube.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lateral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Two-dimensional FEA of the cylindrical case shows lateral attraction and predicts lower negative stiffness as the radial gap increases. The plotted quantities are normalized per millimeter of insertion. Source: Verdirame et al., presentation slide 23.
+</figcaption>
+</figure>
+</div>
+<p>In the circular example, the presentation reports the same attraction for offsets parallel and transverse to the poling direction. Increasing the air gap reduces this destabilizing stiffness, but also reduces axial force. Bearings, flexures, or another guidance mechanism must therefore react the lateral load. A nearly flat axial force curve should never be interpreted as self-centering behavior.</p>
+</section>
+<section id="what-remains-open" class="level3">
+<h3 class="anchored" data-anchor-id="what-remains-open">What remains open</h3>
+<p>The work establishes a compact route from magnetic energy to preliminary spring sizing and demonstrates it on one cylindrical prototype. It does not claim perfectly constant force, zero hysteresis, stability in every direction, or universal wall-thickness rules.</p>
+<p>The presentation identifies misalignment, temperature variation, parasitic stiffness, Halbach arrangements, hysteresis prediction, and actuator integration as continuing work. Those are exactly the issues that separate a promising force curve from a complete gravity-compensation mechanism.</p>
+</section>
+<section id="source" class="level2">
+<h2 class="anchored" data-anchor-id="source">Source</h2>
+<p>Justin M. Verdirame, Byron Seaberg, Yoonsik Kwon, Kareem S. Nayfeh, David L. Trumper, and Samir A. Nayfeh, <strong>“A Survey of Passive Magnetic Springs,”</strong> 40th ASPE Annual Meeting, San Diego, California, November 5, 2025. Slide footer organizations and sites: Physical Precision LLC (<a href="https://www.phyon.tech/">phyon.tech</a>) and MIT Precision Motion Control Lab (<a href="https://pmc.mit.edu/">pmc.mit.edu</a>).</p>
+<p>The equations, numerical results, and slide images in this article come from that presentation. Explanatory derivations and dimension arithmetic are identified in the text; approximate plot readings are not substitutes for raw data.</p>
+
+
+<div class="last-edited">
+<p>Last edited: October 4, 2026</p>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/kareemnayfeh\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

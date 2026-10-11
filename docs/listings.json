@@ -2,12 +2,15 @@
   {
     "listing": "/favorites.html",
     "items": [
+      "/posts/Post6/MagneticHysteresisPaper.html",
+      "/posts/post5/femmWrapper.html",
       "/posts/post4/bushingContact.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Post6/MagneticHysteresisPaper.html",
       "/posts/post5/femmWrapper.html",
       "/posts/post4/bushingContact.html",
       "/posts/post3/checkUnit.html",

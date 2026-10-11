@@ -170,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="an-object-oriented-python-wrapper-for-femm" class="level1">
 <h1>An Object-Oriented Python Wrapper for FEMM</h1>
-<p><a href="https://www.femm.info/">Finite Element Method Magnetics (FEMM)</a> has a python scripting interface thats commands are procedural, meaning you establish something and then edit its attributes line by line before moving onto somthing. This is useable for small scale projects but becomes unreadable and bulky fast. To overcome this, I wrote a small python femm wrapper to automate simulations for a paper I was part of.</p>
+<p><a href="https://www.femm.info/">Finite Element Method Magnetics (FEMM)</a> has a python scripting interface thats commands are procedural, meaning you establish an instance and then edit its attributes line by line before moving onto a seperate instance. This is useable for small scale projects but becomes unreadable and bulky fast. To overcome this, I wrote a small python femm wrapper to automate simulations for a paper I was part of.</p>
 <p>By organizing pyFEMM into objects, it becomes significantly easier to construct larger scale models. I will provide a short example at the end of this post for anyone looking to use it themselves.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> femm</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>

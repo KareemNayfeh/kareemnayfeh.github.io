@@ -2,12 +2,12 @@
 title: "An Object-Oriented Python Wrapper for FEMM"
 description: "Building repeatable magnetic simulations with models, materials, blocks, and coils instead of long procedural pyFEMM scripts"
 last-edited: 2026-08-24
-favorite: false
+favorite: true
 ---
 
 # An Object-Oriented Python Wrapper for FEMM
 
-[Finite Element Method Magnetics (FEMM)](https://www.femm.info/) has a python scripting interface thats commands are procedural, meaning you establish something and then edit its attributes line by line  before moving onto somthing. This is useable for small scale projects but becomes unreadable and bulky fast. To overcome this, I wrote a small python femm wrapper to automate simulations for a paper I was part of.
+[Finite Element Method Magnetics (FEMM)](https://www.femm.info/) has a python scripting interface thats commands are procedural, meaning you establish an instance and then edit its attributes line by line before moving onto a seperate instance. This is useable for small scale projects but becomes unreadable and bulky fast. To overcome this, I wrote a small python femm wrapper to automate simulations for a paper I was part of.
 
 By organizing pyFEMM into objects, it becomes significantly easier to construct larger scale models. I will provide a short example at the end of this post for anyone looking to use it themselves.
 
