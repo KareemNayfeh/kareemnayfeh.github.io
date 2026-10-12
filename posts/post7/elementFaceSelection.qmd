@@ -35,9 +35,9 @@ $$
 \left|\hat{\mathbf{n}}\cdot\hat{\mathbf{g}}-1\right|<10^{-3}.
 $$
 
-Because the test is near \(+1\), it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly \(2.6^\circ\). The resulting element IDs and local face numbers can be assigned directly to a *MeshElementFaces* selection.
+Because the test is near $+1$, it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly $2.6^\circ$. The resulting element IDs and local face numbers can be assigned directly to a *MeshElementFaces* selection.
 
-The final loop advances the search center in \(x\), creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.
+The final loop advances the search center in $x$, creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.
 
 ::: {.callout-note collapse="true"}
 ## Complete script
