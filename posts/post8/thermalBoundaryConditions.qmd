@@ -1,0 +1,83 @@
+---
+title: "Automating Temperature Assignments in ANSYS"
+description: "To reduce setting large amounts of boundary conditions"
+last-edited: 2026-10-12
+favorite: false
+---
+
+# Automating Temperature Assignments in ANSYS Mechanical with Python
+
+When working with thermal models in ANSYS, assigning temperature boundary conditions to components can be time consuming, especially when these conditions are coming from an external source.
+
+For multiple analyses, I needed to apply temperature changes to components using data from a text file, so rather than manually creating and scoping the respectibe geometry, I used regexp and python to automate the process.
+
+In the case below, the data naming convention used sensor names such as NTC01 or RTD02, to apply a different naming convention simply edit the regexp search.
+
+```python
+import re
+
+a = DataModel.GetObjectsByName("Geometry")[0].Children
+b = Model.NamedSelections
+d = DataModel.GetObjectById(266)
+
+def getRow(file, T):
+    finalRow = None
+    var = float("inf")
+    
+    with open(file, 'r') as f:
+        next(f)
+        for line in f:
+            iRow = line.strip().split(',')
+            initial = float(iRow[0])
+            diff = abs(T-initial)
+            if diff < var:
+                var = diff
+                finalRow = iRow
+    f.close()
+    return finalRow
+
+def checkEnd(s):
+    result = re.search(r'NTC\d+$', s) or re.search(r'RTD\d+$', s) 
+    return result
+
+T2 = 12
+T1 = 0
+
+ntc2 = getRow(r'D:\KLA\kla Backplane Thermal_files\user_files\\NTC_system7.txt', T2)
+ntc1 = getRow(r'D:\KLA\kla Backplane Thermal_files\user_files\\NTC_system7.txt', T1)
+
+rtd2 = getRow(r'D:\KLA\kla Backplane Thermal_files\user_files\\RTD_system7.txt', T2)
+rtd1 = getRow(r'D:\KLA\kla Backplane Thermal_files\user_files\\RTD_system7.txt', T1)
+
+for x in a:
+    for y in a.Children:
+        if checkEnd(y.Name):
+            num = int(y.Name[-2:])
+            temp = d.AddTemperature()
+            temp.Name = y.Name[-5:]
+            if y.Name[-5:-2] == 'NTC':
+                print y.Name
+                temp.Magnitude.Output.SetDiscreteValue(0, Quantity(float(ntc2[num]) -float(ntc1[num]), "C"))
+            else:
+                print y.Name
+                temp.Magnitude.Output.SetDiscreteValue(0, Quantity(float(rtd2[num]) -float(rtd1[num]), "C"))
+
+            temp.PromoteToNamedSelection()
+            
+            nsList = DataModel.GetObjectsByName("Named Selections")[0].Children
+            
+            for x in nsList:
+                if x.Name == y.Name[-5:]:
+                    c = x
+                    break
+
+            c.ScopingMethod = GeometryDefineByType.Worksheet
+            c.GenerationCriteria.Add(None)
+            c.GenerationCriteria[0].EntityType = SelectionType.GeoBody
+            c.GenerationCriteria[0].Criterion = SelectionCriterionType.Name
+            c.GenerationCriteria[0].Operator = SelectionOperatorType.Equal
+            c.GenerationCriteria[0].Value = y.Name
+            c.Generate()
+
+
+```
