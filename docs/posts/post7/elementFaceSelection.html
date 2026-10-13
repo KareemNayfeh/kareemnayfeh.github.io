@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Using element centroids, cross products, and dot products to scope a moving thermal load">
+<meta name="description" content="to scope a moving thermal load">
 
-<title>Selecting Mesh Faces by Position and Normal in ANSYS Mechanical – Kareem Nayfeh</title>
+<title>Selecting Mesh Faces in ANSYS Mechanical – Kareem Nayfeh</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -168,10 +168,10 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Selecting Mesh Faces by Position and Normal in ANSYS Mechanical</h1>
+      <h1 class="title">Selecting Mesh Faces in ANSYS Mechanical</h1>
                   <div>
         <div class="description">
-          Using element centroids, cross products, and dot products to scope a moving thermal load
+          to scope a moving thermal load
         </div>
       </div>
                 </div>
@@ -199,41 +199,24 @@ window.Quarto = {
 
 <section id="selecting-mesh-faces-by-position-and-normal-in-ansys-mechanical" class="level1">
 <h1>Selecting Mesh Faces by Position and Normal in ANSYS Mechanical</h1>
-<p>For a moving heat-source model, I needed to select mesh faces near a point and facing a specified direction. The script below does this in two filters: it finds nearby element centroids, then checks the orientation of each candidate face.</p>
-<section id="find-nearby-elements" class="level2">
-<h2 class="anchored" data-anchor-id="find-nearby-elements">1. Find nearby elements</h2>
+<p>For a moving heat-source model, I needed to select mesh faces near a point and facing a specified direction. The script below does this by finding nearby element centroids, then checking the orientation of each candidate face.</p>
 <p>For an <em>xy</em> search, an element with centroid <span class="math inline">\(\mathbf{c}\)</span> is retained when</p>
 <p><span class="math display">\[
 (c_x-q_x)^2+(c_y-q_y)^2 \le r^2,
 \]</span></p>
-<p>where <span class="math inline">\(\mathbf{q}\)</span> is the search center and <span class="math inline">\(r\)</span> is the radius. Ignoring the third coordinate makes this a cylindrical search through the mesh rather than a spherical one. Using centroids is fast, although the boundary changes slightly with mesh density.</p>
-</section>
-<section id="choose-the-correctly-oriented-face" class="level2">
-<h2 class="anchored" data-anchor-id="choose-the-correctly-oriented-face">2. Choose the correctly oriented face</h2>
+<p>where <span class="math inline">\(\mathbf{q}\)</span> is the search center and <span class="math inline">\(r\)</span> is the radius. Ignoring the third coordinate makes this a cylindrical search through the mesh rather than a spherical one. Using centroids is fast, despite the boundary changing slightly with mesh density.</p>
 <p>Each element type has a different local face definition, so <em>eTypeToFaceIndex</em> maps every face to its local node indices. For the first three corner positions <span class="math inline">\(\mathbf{p}_0\)</span>, <span class="math inline">\(\mathbf{p}_1\)</span>, and <span class="math inline">\(\mathbf{p}_2\)</span>, the unit normal is</p>
 <p><span class="math display">\[
 \hat{\mathbf{n}}=
 \frac{(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)}
-{\left\|(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)\right\|}.
+{\left\|(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)\right\|}
 \]</span></p>
 <p>The node order matters because reversing it reverses the normal. The face matches a target direction <span class="math inline">\(\hat{\mathbf{g}}\)</span> when</p>
 <p><span class="math display">\[
 \left|\hat{\mathbf{n}}\cdot\hat{\mathbf{g}}-1\right|&lt;10^{-3}.
 \]</span></p>
-<p>Because the test is near <span class="math inline">\(+1\)</span>, it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly <span class="math inline">\(2.6^\circ\)</span>. The resulting element IDs and local face numbers can be assigned directly to a <em>MeshElementFaces</em> selection.</p>
-<p>The final loop advances the search center in <span class="math inline">\(x\)</span>, creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Complete script
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<p>Because the test is near (+1), it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly (2.6^). The resulting element IDs and local face numbers can be assigned directly to a <em>MeshElementFaces</em> selection.</p>
+<p>The final loop advances the search center in (x), creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>eTypeToFaceIndex <span class="op">=</span> {</span>
@@ -428,16 +411,11 @@ window.Quarto = {
 <span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> timeIndex <span class="kw">in</span> <span class="bu">range</span>(nSteps)</span>
 <span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>    setHeatFlow(heatFlow, timeSteps, heatValues)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-<p>Two guards are worth keeping: skip elements with no matching face, and reject zero-length target vectors or degenerate faces before normalizing them.</p>
 
 
 <div class="last-edited">
 <p>Last edited: October 11, 2026</p>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,15 +1,14 @@
 ---
-title: "Selecting Mesh Faces by Position and Normal in ANSYS Mechanical"
-description: "Using element centroids, cross products, and dot products to scope a moving thermal load"
+title: "Selecting Mesh Faces in ANSYS Mechanical"
+description: "to scope a moving thermal load"
 last-edited: 2026-10-11
 favorite: false
 ---
 
 # Selecting Mesh Faces by Position and Normal in ANSYS Mechanical
 
-For a moving heat-source model, I needed to select mesh faces near a point and facing a specified direction. The script below does this in two filters: it finds nearby element centroids, then checks the orientation of each candidate face.
+For a moving heat-source model, I needed to select mesh faces near a point and facing a specified direction. The script below does this by finding nearby element centroids, then checking the orientation of each candidate face.
 
-## 1. Find nearby elements
 
 For an *xy* search, an element with centroid $\mathbf{c}$ is retained when
 
@@ -17,16 +16,15 @@ $$
 (c_x-q_x)^2+(c_y-q_y)^2 \le r^2,
 $$
 
-where $\mathbf{q}$ is the search center and $r$ is the radius. Ignoring the third coordinate makes this a cylindrical search through the mesh rather than a spherical one. Using centroids is fast, although the boundary changes slightly with mesh density.
+where $\mathbf{q}$ is the search center and $r$ is the radius. Ignoring the third coordinate makes this a cylindrical search through the mesh rather than a spherical one. Using centroids is fast, despite the boundary changing slightly with mesh density.
 
-## 2. Choose the correctly oriented face
 
 Each element type has a different local face definition, so *eTypeToFaceIndex* maps every face to its local node indices. For the first three corner positions $\mathbf{p}_0$, $\mathbf{p}_1$, and $\mathbf{p}_2$, the unit normal is
 
 $$
 \hat{\mathbf{n}}=
 \frac{(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)}
-{\left\|(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)\right\|}.
+{\left\|(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)\right\|}
 $$
 
 The node order matters because reversing it reverses the normal. The face matches a target direction $\hat{\mathbf{g}}$ when
@@ -35,14 +33,11 @@ $$
 \left|\hat{\mathbf{n}}\cdot\hat{\mathbf{g}}-1\right|<10^{-3}.
 $$
 
-Because the test is near $+1$, it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly $2.6^\circ$. The resulting element IDs and local face numbers can be assigned directly to a *MeshElementFaces* selection.
+Because the test is near \(+1\), it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly \(2.6^\circ\). The resulting element IDs and local face numbers can be assigned directly to a *MeshElementFaces* selection.
 
-The final loop advances the search center in $x$, creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.
+The final loop advances the search center in \(x\), creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.
 
-::: {.callout-note collapse="true"}
-## Complete script
-
-~~~python
+```python
 import numpy as np
 
 eTypeToFaceIndex = {
@@ -237,8 +232,4 @@ for step in range(nSteps):
         for timeIndex in range(nSteps)
     ]
     setHeatFlow(heatFlow, timeSteps, heatValues)
-~~~
-
-:::
-
-Two guards are worth keeping: skip elements with no matching face, and reject zero-length target vectors or degenerate faces before normalizing them.
+```
