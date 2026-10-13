@@ -37,5 +37,17 @@
   },
   "posts/post5/femmWrapper.qmd": {
     "femmWrapper.html": "1e8cad1c"
+  },
+  "magnetic-springs-codex-package/magnetic-springs-source/magnetic-springs-reference.md": {
+    "magnetic-springs-reference.html": "97b40f67"
+  },
+  "magnetic-springs-reference.md": {
+    "magnetic-springs-reference.html": "44e789cf"
+  },
+  "posts/Post6/MagneticHysteresisPaper.qmd": {
+    "MagneticHysteresisPaper.html": "c339074e"
+  },
+  "posts/post7/elementFaceSelection.qmd": {
+    "elementFaceSelection.html": "5646e034"
   }
 }
