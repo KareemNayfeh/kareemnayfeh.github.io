@@ -162,48 +162,46 @@ window.Quarto = {
 
 
 
-<section id="designing-passive-magnetic-springs-with-energy-based-models" class="level1">
-<h1>Designing Passive Magnetic Springs with Energy-Based Models</h1>
-<p>A vertical actuator should not have to spend energy continuously just to hold up a payload. A passive spring can carry that static load, leaving the actuator to handle motion and disturbance rejection. Conventional springs can do this, but their force usually changes with displacement. A well-designed magnetic spring can instead provide a nearly constant force over a useful range of travel, without contact between its moving parts.</p>
-<p>By utilizing the difference in magnetic energy between two cross sections, force may be estimated. That produces a useful design model before the expense of a full three-dimensional finite-element analysis (FEA). We then test the approach against 3D simulations and a physical cylindrical-magnet experiment.</p>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>A vertical actuator under load should not have to be supplying energy given that a passive spring is handling this static load. The actuator should be left to handle disturbances and changes in motion. While conventional springs accomplish this, their force varies with displacement; a magnetic spring, however, may provide a constant, contactless force over a range of travel.</p>
+<p>By looking at the difference in energy between two bodies, one inside a tube and one outside, we may estimate force. From this estimation, a design model can be made before performing analysis on it using FEMM, then finally performing a physical experiment.</p>
 <section id="the-design-problem" class="level3">
 <h3 class="anchored" data-anchor-id="the-design-problem">The design problem</h3>
-<p>A magnetic spring is not useful merely because two magnets attract or repel. Its force-displacement curve must suit the mechanism around it. For gravity compensation, the desired behavior is often a force that changes very little across the operating stroke.</p>
-<p>The presentation surveys several ways to create that behavior: normal-force arrangements, shear arrangements, iron-backed and ironless designs, magnet arrays, and push-pull configurations. It also highlights the quantities that a force-only design can miss: lateral stiffness, hysteresis, damping, temperature sensitivity, moving mass, and package size.</p>
-<p>The clearest example is a long permanent magnet that slides axially into a soft-magnetic tube. The magnet is polarized across its cross section, so this is a shear configuration: axial motion changes the overlap between magnet and tube without changing the radial air gap.</p>
+<p>One priority in this model was a force-displacement relationship that under load and gravity would remain relatively unchanged. One way to accomplish this is a long permanent magnet that slides through a tube. The magnet is polarized across its cross section, perpendicular to its direction of motion. (EXPLAIN MORE WHY THIS IS A GOOD SOLUTION)</p>
 <div id="fig-sections" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide showing a rectangular magnet entering an iron tube, three cross-sectional regions, a magnetic circuit, and two-dimensional flux plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sections-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="magnetic-spring-sections.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide showing a rectangular magnet entering an iron tube, three cross-sectional regions, a magnetic circuit, and two-dimensional flux plots.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sections-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A long transversely poled magnet entering a soft-magnetic tube can be divided into nearly two-dimensional cross-sectional regions. The field plots and magnetic-circuit analogy are analytical and simulation tools, not measurements. Source: Verdirame et al., presentation slide 9.
+Figure&nbsp;1: A long magnet entering a tube shown divided into two-dimensional cross-sectional regions. The plots are analytical and simulation tools, not measurements.
 </figcaption>
 </figure>
 </div>
-<p>If the magnet and tube are sufficiently long, most of the device can be represented by three cross sections: an empty tube, a magnet inside the tube, and a magnet outside the tube. Only the entrance and exit are strongly three-dimensional. This separation is what makes the energy method practical.</p>
+<p>Given a long enough tube, it can be shown as a cross section without regarding the end behaviors.</p>
 </section>
-<section id="force-from-energy-per-unit-length" class="level3">
-<h3 class="anchored" data-anchor-id="force-from-energy-per-unit-length">Force from energy per unit length</h3>
-<p>Let (E_0) be the magnetic energy per unit axial length of the magnet outside the tube, and let (E_1) be the corresponding energy per unit length with the magnet inside the tube. Both have units of joules per meter, which is dimensionally equivalent to newtons.</p>
-<p>As the magnet advances by a small distance (du), one cross-sectional slice changes from the outside state to the inside state. The presentation therefore estimates the axial force magnitude as</p>
+<section id="theory" class="level3">
+<h3 class="anchored" data-anchor-id="theory">Theory</h3>
+<p>Let (E_0) be magnetic energy per unit length (of the magnet outside the tube), and let (E_1) be the energy per unit length (of the magnet inside the tube). Both have units of joules per meter.</p>
+<p>As the magnet moves forward by du, a slice of the cross section changes to match the inside state. Therefore, axial force can be represented by</p>
 <p><span class="math display">\[
 F \approx E_0-E_1.
 \]</span></p>
-<p>A useful interpretation is to write the total magnetic energy as a sum of the two regions. Increasing the overlap transfers length from the (E_0) region to the (E_1) region, so differentiating energy with respect to displacement produces their difference. No extra magnet length belongs in the force equation because each (E_i) is already an energy <em>per unit length</em>.</p>
+<p>THe total energy can be written as a sum of the regions. So icnreasing the overlap between the two magnets transfers eneergy from the outside region to the inside region. We can then diffrentiate energy with respect to displacement to get the difference. Because its energy per unit length, there is no need for magnet length to be considered.</p>
 <p>For the rectangular tube model, the air-gap flux density is approximated with a magnetic circuit:</p>
 <p><span class="math display">\[
 B = B_r\frac{t/\mu_r}{t/\mu_r+2g},
 \]</span></p>
-<p>where (B_r) is the magnet remanence, (t) is its dimension along the poling direction, (g) is the one-sided air gap, and (mu_r) is the magnet recoil relative permeability. This relation assumes that the iron provides a sufficiently permeable return path. Thin or saturated iron violates that simplifying assumption.</p>
-<p>The presentation normalizes results by the reference energy per unit length</p>
+<p>where (B_r) is the magnet remanence, (t) is its dimension along the poling direction, (g) is the one-sided air gap, and (mu_r) is the magnet recoil relative permeability. This relation assumes that the iron provides a sufficiently permeable return path.</p>
+<p>Normalizing by the reference energy per length now gives</p>
 <p><span class="math display">\[
 E^*=\frac{B_r^2tw}{2\mu_r\mu_0},
 \]</span></p>
-<p>where (w) is the other cross-sectional dimension and (mu_0) is the permeability of free space. For the illustrated rectangular example, the stated values are (E^<em>=101&nbsp;), (E_0=0.55E^</em>=56&nbsp;), and (E_1=0.09E^*=9.1&nbsp;). Their rounded difference gives an <strong>estimated</strong> force of about (47&nbsp;). It is not an experimental result.</p>
+<p>where (w) is the other cross-sectional dimension and (mu_0) is the permeability of free space.</p>
 </section>
-<section id="why-the-force-is-flat-only-over-part-of-the-stroke" class="level3">
-<h3 class="anchored" data-anchor-id="why-the-force-is-flat-only-over-part-of-the-stroke">Why the force is flat only over part of the stroke</h3>
+<section id="considering-the-entrance-and-exit" class="level3">
+<h3 class="anchored" data-anchor-id="considering-the-entrance-and-exit">Considering the entrance and exit</h3>
 <p>The cross-sectional estimate has no entrance or exit, so it predicts a constant force. A 3D model restores those end effects.</p>
 <div id="fig-fea" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide comparing a constant normalized force estimate with a displacement-dependent three-dimensional finite-element curve.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -211,103 +209,49 @@ E^*=\frac{B_r^2tw}{2\mu_r\mu_0},
 <img src="magnetic-spring-fea.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide comparing a constant normalized force estimate with a displacement-dependent three-dimensional finite-element curve.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fea-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: The dotted line is the energy-based estimate; the solid curve is 3D FEA. Agreement is strongest after entry and before the far end of the tube. Source: Verdirame et al., presentation slide 11.
+Figure&nbsp;2: The dotted line is the energy-based estimate; the solid curve is 3D FEA. Agreement is strongest after entry and before the far end of the tube.
 </figcaption>
 </figure>
 </div>
-<p>In the simulated curve, force rises as the magnet enters the tube, stays near (0.45E^*) across an intermediate region, and then falls as the magnet approaches the other end. The analytical estimate is therefore most useful for sizing the plateau force. Travel limits and end behavior still need a 3D calculation or a measurement.</p>
-<p>The same division of labor applies to the iron. If the wall is thick enough to remain below strong saturation, a magnetic circuit provides a quick estimate of (E_1). If the wall is too thin, local saturation increases the energy of the inside state and reduces the plateau force. The presentation recommends obtaining (E_1) from 2D FEA in that case.</p>
-<p>For the studied N52 magnet and 1018-steel rectangular geometry, the simulated force approaches a plateau once the wall thickness is about one-third of the magnet width. Larger air gaps reduce force. That one-third value is a configuration-specific sizing observation, not a universal rule for other steels, magnet grades, or geometries.</p>
+<p>In this simulated curve, force spikes as the magnet enters the tube, then flattens out once inside the device, then drops as the magnet approaches the exit of the tube. In the case of the iron, if the wall has enough mass to remain below saturation, a magnetic circuit may provide an estimate of the energies. In the case where the iron saturates, the energy on the inside increases which throws off the relationship we seek.</p>
 </section>
-<section id="iron-backed-and-ironless-designs" class="level3">
-<h3 class="anchored" data-anchor-id="iron-backed-and-ironless-designs">Iron-backed and ironless designs</h3>
-<p>Soft iron concentrates flux and increases force for a given magnet cross section, but it also brings saturation and hysteresis. An ironless design removes that major hysteretic material at the cost of more magnet volume for the same force.</p>
+<section id="iron-vs-ironless-design" class="level3">
+<h3 class="anchored" data-anchor-id="iron-vs-ironless-design">Iron vs ironless design</h3>
+<p>Soft iron concentrates flux which increases force for a given set up but also introduces saturation and hysteresis. An ironless design would remove the hysteretic complications but would require more magnetic material to produce the same force.</p>
 <div id="fig-packaging" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide comparing iron-backed, split-magnet iron-backed, and enlarged ironless magnetic spring cross sections.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-packaging-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="magnetic-spring-packaging.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide comparing iron-backed, split-magnet iron-backed, and enlarged ironless magnetic spring cross sections.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-packaging-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: The presentation’s equal-force packaging comparison. In the stated geometry, the iron-backed design reaches about (0.45E^<em>), while the three-magnet ironless arrangement reaches about (0.15E^</em>) for the same magnet-area normalization. Source: Verdirame et al., presentation slide 20.
+Figure&nbsp;3: Equal-force packaging comparison. In this geometry, the iron design reaches about (0.45E^<em>), while the three-magnet ironless arrangement reaches about (0.15E^</em>) for the same magnet-area normalization.
 </figcaption>
 </figure>
 </div>
-<p>For the particular comparison shown, with (2g/t=0.1) and iron wall thickness (a=w/3), the iron-backed design produces approximately (0.45E^<em>). A three-magnet ironless layout produces approximately (0.15E^</em>) when normalized by the same total magnet area. Because (E^*) scales with magnet cross-sectional area, about three times the magnet area can recover similar force. If both linear dimensions are scaled together, that corresponds to a factor of (sqrt{3}).</p>
-<p>This is a packaging tradeoff, not a general claim that the alternatives have identical mass, cost, thermal behavior, or lateral stiffness. The design choice depends on whether compactness or low hysteresis matters more.</p>
+<p>For the comparison shown above, the iron design produces 3x more force given the same amount of magnetic material. Because E scales with cross sectional area, this corresponds to a factor of (sqrt{3}).</p>
+<p>This is a tradeoff and the choice would come down to whether the priority is compactness or precision.</p>
 </section>
-<section id="the-cylindrical-experiment" class="level3">
-<h3 class="anchored" data-anchor-id="the-cylindrical-experiment">The cylindrical experiment</h3>
+<section id="the-experiment" class="level3">
+<h3 class="anchored" data-anchor-id="the-experiment">The experiment</h3>
 <p>The physical test used a diametrically poled N52 cylindrical magnet: its magnetization points across the diameter rather than along its axis. The magnet was 6.35 mm in diameter and 25.4 mm long. It moved into a 25 mm-long 1018-steel tube with a 7 mm inner diameter and a 16 mm outer diameter.</p>
-<p>For a circular magnet of diameter (d), the presentation uses</p>
+<p>For a circular magnet of diameter (d)</p>
 <p><span class="math display">\[
 E^*=\frac{\pi d^2B_r^2}{8\mu_r\mu_0}, \qquad \frac{E_0}{E^*}=\frac{1}{2},
 \]</span></p>
-<p>and obtains (E_1/E^<em>) from 2D FEA. The reported reference scale for the test magnet is (E^</em>&nbsp;). The diameters imply a radial clearance of</p>
-<p><span class="math display">\[
-g=\frac{7-6.35}{2}=0.325\ \mathrm{mm},
-\]</span></p>
-<p>so (2g/d). This ratio is arithmetic derived from the stated dimensions, not a separate measurement.</p>
+<p>and obtains (E_1/E^<em>) from 2D FEMM analysis. The reference scale for the test magnet is (E^</em>&nbsp;). The diameters imply a radial clearance of 0.325 mm.</p>
 <div id="fig-experiment" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide with a force-versus-insertion plot and photograph of the cylindrical magnetic spring experiment.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-experiment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="magnetic-spring-experiment.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide with a force-versus-insertion plot and photograph of the cylindrical magnetic spring experiment.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-experiment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: The experimental apparatus and its force comparison. Blue is measurement, orange is 3D FEA, and the dotted yellow line is the constant 2D estimate. Source: Verdirame et al., presentation slide 24.
-</figcaption>
-</figure>
-</div>
-<p>The different evidence types should not be collapsed into one number:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Result</th>
-<th>Method</th>
-<th>What the presentation shows</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(F0.42E^*&nbsp;)</td>
-<td>2D model</td>
-<td>A stated constant-force prediction</td>
-</tr>
-<tr class="even">
-<td>Peak/plateau near (11&nbsp;)</td>
-<td>3D FEA</td>
-<td>A displacement-dependent simulated curve with end effects</td>
-</tr>
-<tr class="odd">
-<td>Plateau roughly (10&nbsp;)</td>
-<td>Physical measurement</td>
-<td>An approximate visual reading of the plotted blue trace, which gradually declines with insertion</td>
-</tr>
-<tr class="even">
-<td>About (60&nbsp;), less than 1%</td>
-<td>Physical measurement</td>
-<td>The reported width of a force hysteresis loop over several millimeters of cycling</td>
-</tr>
-</tbody>
-</table>
-<p>The measurement confirms the intended order of magnitude and the existence of a broad force plateau. The plot does not provide raw data or uncertainty bounds, so it does not support an exact model-error percentage. The reported “less than 1%” refers to the measured hysteresis loop, not to agreement between simulation and experiment.</p>
-<div id="fig-hysteresis" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide showing the experiment's full force curve and a magnified measured hysteresis loop.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-hysteresis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="magnetic-spring-hysteresis.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide showing the experiment's full force curve and a magnified measured hysteresis loop.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hysteresis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Repeated motion over part of the stroke produced a measured force loop of about 60 mN. The enlarged graph shows change in force, not the full axial force. Source: Verdirame et al., presentation slide 25.
+Figure&nbsp;4: The apparatus and its force comparison. Blue is measurement, orange is 3D FEA, and the dotted yellow line is the constant 2D estimate.
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="constant-axial-force-does-not-mean-lateral-stability" class="level3">
-<h3 class="anchored" data-anchor-id="constant-axial-force-does-not-mean-lateral-stability">Constant axial force does not mean lateral stability</h3>
+<section id="lateral-stability-issue" class="level3">
+<h3 class="anchored" data-anchor-id="lateral-stability-issue">Lateral stability issue</h3>
 <p>The tube attracts an off-center magnet toward the nearest wall. That is a negative lateral stiffness: a small radial displacement produces a force that increases the displacement instead of restoring the magnet to center.</p>
 <div id="fig-lateral" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Presentation slide showing off-center magnetic flux fields, lateral force, and lateral negative stiffness for a cylindrical magnet in a tube.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -315,21 +259,11 @@ Figure&nbsp;5: Repeated motion over part of the stroke produced a measured force
 <img src="magnetic-spring-lateral.png" class="img-fluid figure-img" style="width:100.0%" alt="Presentation slide showing off-center magnetic flux fields, lateral force, and lateral negative stiffness for a cylindrical magnet in a tube.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lateral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Two-dimensional FEA of the cylindrical case shows lateral attraction and predicts lower negative stiffness as the radial gap increases. The plotted quantities are normalized per millimeter of insertion. Source: Verdirame et al., presentation slide 23.
+Figure&nbsp;5: Two-dimensional FEA of the cylindrical case shows lateral attraction and predicts lower negative stiffness as the radial gap increases. The plotted quantities are normalized per millimeter of insertion.
 </figcaption>
 </figure>
 </div>
-<p>In the circular example, the presentation reports the same attraction for offsets parallel and transverse to the poling direction. Increasing the air gap reduces this destabilizing stiffness, but also reduces axial force. Bearings, flexures, or another guidance mechanism must therefore react the lateral load. A nearly flat axial force curve should never be interpreted as self-centering behavior.</p>
-</section>
-<section id="what-remains-open" class="level3">
-<h3 class="anchored" data-anchor-id="what-remains-open">What remains open</h3>
-<p>The work establishes a compact route from magnetic energy to preliminary spring sizing and demonstrates it on one cylindrical prototype. It does not claim perfectly constant force, zero hysteresis, stability in every direction, or universal wall-thickness rules.</p>
-<p>The presentation identifies misalignment, temperature variation, parasitic stiffness, Halbach arrangements, hysteresis prediction, and actuator integration as continuing work. Those are exactly the issues that separate a promising force curve from a complete gravity-compensation mechanism.</p>
-</section>
-<section id="source" class="level2">
-<h2 class="anchored" data-anchor-id="source">Source</h2>
-<p>Justin M. Verdirame, Byron Seaberg, Yoonsik Kwon, Kareem S. Nayfeh, David L. Trumper, and Samir A. Nayfeh, <strong>“A Survey of Passive Magnetic Springs,”</strong> 40th ASPE Annual Meeting, San Diego, California, November 5, 2025. Slide footer organizations and sites: Physical Precision LLC (<a href="https://www.phyon.tech/">phyon.tech</a>) and MIT Precision Motion Control Lab (<a href="https://pmc.mit.edu/">pmc.mit.edu</a>).</p>
-<p>The equations, numerical results, and slide images in this article come from that presentation. Explanatory derivations and dimension arithmetic are identified in the text; approximate plot readings are not substitutes for raw data.</p>
+<p>In the circular example, the same attraction for offsets parallel and transverse to the poling direction. Increasing the air gap reduced this destabilizing stiffness, but also reduced axial force. Bearings, flexures, or another guidance mechanism must therefore guide the lateral load. A nearly flat axial force curve may not be interpreted as self-centering behavior.</p>
 
 
 <div class="last-edited">

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="to scope a moving thermal load">
+<meta name="description" content="to scope various loads">
 
 <title>Selecting Mesh Faces in ANSYS Mechanical – Kareem Nayfeh</title>
 <style>
@@ -171,7 +171,7 @@ window.Quarto = {
       <h1 class="title">Selecting Mesh Faces in ANSYS Mechanical</h1>
                   <div>
         <div class="description">
-          to scope a moving thermal load
+          to scope various loads
         </div>
       </div>
                 </div>
@@ -199,24 +199,15 @@ window.Quarto = {
 
 <section id="selecting-mesh-faces-by-position-and-normal-in-ansys-mechanical" class="level1">
 <h1>Selecting Mesh Faces by Position and Normal in ANSYS Mechanical</h1>
-<p>For a moving heat-source model, I needed to select mesh faces near a point and facing a specified direction. The script below does this by finding nearby element centroids, then checking the orientation of each candidate face.</p>
-<p>For an <em>xy</em> search, an element with centroid <span class="math inline">\(\mathbf{c}\)</span> is retained when</p>
-<p><span class="math display">\[
-(c_x-q_x)^2+(c_y-q_y)^2 \le r^2,
-\]</span></p>
-<p>where <span class="math inline">\(\mathbf{q}\)</span> is the search center and <span class="math inline">\(r\)</span> is the radius. Ignoring the third coordinate makes this a cylindrical search through the mesh rather than a spherical one. Using centroids is fast, despite the boundary changing slightly with mesh density.</p>
-<p>Each element type has a different local face definition, so <em>eTypeToFaceIndex</em> maps every face to its local node indices. For the first three corner positions <span class="math inline">\(\mathbf{p}_0\)</span>, <span class="math inline">\(\mathbf{p}_1\)</span>, and <span class="math inline">\(\mathbf{p}_2\)</span>, the unit normal is</p>
-<p><span class="math display">\[
-\hat{\mathbf{n}}=
-\frac{(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)}
-{\left\|(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)\right\|}
-\]</span></p>
-<p>The node order matters because reversing it reverses the normal. The face matches a target direction <span class="math inline">\(\hat{\mathbf{g}}\)</span> when</p>
-<p><span class="math display">\[
-\left|\hat{\mathbf{n}}\cdot\hat{\mathbf{g}}-1\right|&lt;10^{-3}.
-\]</span></p>
-<p>Because the test is near (+1), it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly (2.6^). The resulting element IDs and local face numbers can be assigned directly to a <em>MeshElementFaces</em> selection.</p>
-<p>The final loop advances the search center in (x), creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.</p>
+<p>Selecting elements and element faces is a very powerful tool when it comes to applying various conditions in ANSYS. This page is entirely dedicated to the selection of elements and their faces.</p>
+<p>The reason this is so difficult is because while the elements themselves are objects, the faces are abrbitrarily indexed starting from 0. This means that for the exact same setup, the 0th face of a cubic element could be in opposite directions between models. Additionally, there are no normal vectors or centroids provided for these faces, despite them being one of the strongest ways to apply loads during analysis. Using a singular function <code>getFaceSelectionAtCoords()</code> now allows us to get a highly accurate circle of elements and the faces on their surface.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="elements.png" class="img-fluid figure-img"></p>
+<figcaption>Elements</figcaption>
+</figure>
+</div>
+<p>The math behind the code can be found at the end of this page!</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>eTypeToFaceIndex <span class="op">=</span> {</span>
@@ -364,58 +355,32 @@ window.Quarto = {
 <span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>):</span>
 <span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>    elements <span class="op">=</span> getElementAroundCoords(meshData, coords, r, plane)</span>
 <span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> createFaceSelection(elements, targetFaceVector)</span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> setHeatFlow(heatFlow, times, heats):</span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>    heatFlow.Magnitude.Inputs[<span class="dv">0</span>].DiscreteValues <span class="op">=</span> [</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>        Quantity(time, <span class="st">"s"</span>) <span class="cf">for</span> time <span class="kw">in</span> times</span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>    heatFlow.Magnitude.Output.DiscreteValues <span class="op">=</span> [</span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>        Quantity(heat, <span class="st">"W"</span>) <span class="cf">for</span> heat <span class="kw">in</span> heats</span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="bu">globals</span>().update(<span class="bu">locals</span>())</span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>analysis <span class="op">=</span> Model.Analyses[<span class="dv">0</span>]</span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>meshData <span class="op">=</span> getMeshData(</span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>    Model.NamedSelections.Children[<span class="dv">0</span>],</span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>    analysis.MeshData</span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>nSteps <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>deltaT <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>coords <span class="op">=</span> np.array([<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>])</span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>timeSteps <span class="op">=</span> [step <span class="op">*</span> deltaT <span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(nSteps)]</span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>settings <span class="op">=</span> analysis.AnalysisSettings</span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>settings.NumberOfSteps <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>settings.CurrentStepNumber <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>settings.StepEndTime <span class="op">=</span> Quantity(nSteps <span class="op">*</span> deltaT, <span class="st">"s"</span>)</span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(nSteps):</span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>    faceSelection <span class="op">=</span> getFaceSelectionAtCoords(</span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>        meshData,</span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>        coords,</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.01</span>,</span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>        [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]</span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>    coords <span class="op">=</span> coords <span class="op">+</span> [<span class="fl">0.015</span>, <span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>    heatFlow <span class="op">=</span> analysis.AddHeatFlow()</span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>    heatFlow.Name <span class="op">=</span> <span class="st">"Custom Heat Flow "</span> <span class="op">+</span> <span class="bu">str</span>(step)</span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>    heatFlow.Location <span class="op">=</span> faceSelection</span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>    heatValues <span class="op">=</span> [</span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2000</span> <span class="cf">if</span> timeIndex <span class="op">==</span> step <span class="cf">else</span> <span class="dv">0</span></span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> timeIndex <span class="kw">in</span> <span class="bu">range</span>(nSteps)</span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>    setHeatFlow(heatFlow, timeSteps, heatValues)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="math-behind-the-code" class="level3">
+<h3 class="anchored" data-anchor-id="math-behind-the-code">Math behind the code</h3>
+<p>For an <em>xy</em> search, an element with centroid <span class="math inline">\(\mathbf{c}\)</span> is obtained when</p>
+<p><span class="math display">\[
+(c_x-q_x)^2+(c_y-q_y)^2 \le r^2,
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{q}\)</span> is the search center and <span class="math inline">\(r\)</span> is the radius. Ignoring the third coordinate makes this a cylindrical search through the mesh rather than a spherical one.</p>
+<p>Each element type has a different local face definition, so <em>eTypeToFaceIndex</em> maps every face to its local node indices. For the first three corner positions <span class="math inline">\(\mathbf{p}_0\)</span>, <span class="math inline">\(\mathbf{p}_1\)</span>, and <span class="math inline">\(\mathbf{p}_2\)</span>, the unit normal is</p>
+<p><span class="math display">\[
+\hat{\mathbf{n}}=
+\frac{(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)}
+{\left\|(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)\right\|}
+\]</span></p>
+<p>The node order matters because reversing it reverses the normal. The face matches a target direction <span class="math inline">\(\hat{\mathbf{g}}\)</span> when</p>
+<p><span class="math display">\[
+\left|\hat{\mathbf{n}}\cdot\hat{\mathbf{g}}-1\right|&lt;10^{-3}.
+\]</span></p>
+<p>Because the test is near (+1), it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly (2.6^). The resulting element IDs and local face numbers can be assigned directly to a <em>MeshElementFaces</em> selection.</p>
+<p>The final loop advances the search center in (x), creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.</p>
 
 
 <div class="last-edited">
 <p>Last edited: October 11, 2026</p>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->

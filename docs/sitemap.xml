@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post8/thermalBoundaryConditions.html</loc>
-    <lastmod>2026-10-13T20:17:34.874Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/posts/post9/movingHeadLoad.html</loc>
+    <lastmod>2026-10-15T20:59:39.308Z</lastmod>
   </url>
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/Post6/MagneticHysteresisPaper.html</loc>
-    <lastmod>2026-10-04T21:32:53.881Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/posts/post7/elementFaceSelection.html</loc>
+    <lastmod>2026-10-15T20:50:04.357Z</lastmod>
   </url>
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post4/bushingContact.html</loc>
-    <lastmod>2026-08-23T19:37:47.684Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/posts/post5/femmWrapper.html</loc>
+    <lastmod>2026-10-15T20:38:43.015Z</lastmod>
   </url>
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post2/rpFromNs.html</loc>
-    <lastmod>2026-08-23T19:59:45.299Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/posts/post3/checkUnit.html</loc>
+    <lastmod>2026-08-23T19:37:48.385Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kareemnayfeh.github.io/posts/post10/fra.html</loc>
+    <lastmod>2026-10-15T21:11:44.875Z</lastmod>
   </url>
   <url>
     <loc>https://kareemnayfeh.github.io/magnetic-springs-reference.html</loc>
@@ -37,15 +41,19 @@
     <lastmod>2026-08-23T19:37:50.245Z</lastmod>
   </url>
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post3/checkUnit.html</loc>
-    <lastmod>2026-08-23T19:37:48.385Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/posts/post2/rpFromNs.html</loc>
+    <lastmod>2026-08-23T19:59:45.299Z</lastmod>
   </url>
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post5/femmWrapper.html</loc>
-    <lastmod>2026-10-04T21:26:44.609Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/posts/post4/bushingContact.html</loc>
+    <lastmod>2026-08-23T19:37:47.684Z</lastmod>
   </url>
   <url>
-    <loc>https://kareemnayfeh.github.io/posts/post7/elementFaceSelection.html</loc>
-    <lastmod>2026-10-13T19:32:25.960Z</lastmod>
+    <loc>https://kareemnayfeh.github.io/posts/Post6/MagneticHysteresisPaper.html</loc>
+    <lastmod>2026-10-15T19:58:36.888Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kareemnayfeh.github.io/posts/post8/thermalBoundaryConditions.html</loc>
+    <lastmod>2026-10-13T20:17:34.874Z</lastmod>
   </url>
 </urlset>

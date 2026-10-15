@@ -52,5 +52,11 @@
   },
   "posts/post8/thermalBoundaryConditions.qmd": {
     "thermalBoundaryConditions.html": "f660b89f"
+  },
+  "posts/post9/movingHeadLoad.qmd": {
+    "movingHeadLoad.html": "511b6ddf"
+  },
+  "posts/post10/fra.qmd": {
+    "fra.html": "f2df21eb"
   }
 }

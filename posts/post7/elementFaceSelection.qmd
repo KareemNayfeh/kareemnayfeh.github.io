@@ -1,41 +1,19 @@
 ---
 title: "Selecting Mesh Faces in ANSYS Mechanical"
-description: "to scope a moving thermal load"
+description: "to scope various loads"
 last-edited: 2026-10-11
 favorite: false
 ---
 
 # Selecting Mesh Faces by Position and Normal in ANSYS Mechanical
 
-For a moving heat-source model, I needed to select mesh faces near a point and facing a specified direction. The script below does this by finding nearby element centroids, then checking the orientation of each candidate face.
+Selecting elements and element faces is a very powerful tool when it comes to applying various conditions in ANSYS. This page is entirely dedicated to the selection of elements and their faces.
 
+The reason this is so difficult is because while the elements themselves are objects, the faces are abrbitrarily indexed starting from 0. This means that for the exact same setup, the 0th face of a cubic element could be in opposite directions between models. Additionally, there are no normal vectors or centroids provided for these faces, despite them being one of the strongest ways to apply loads during analysis. Using a singular function `getFaceSelectionAtCoords()` now allows us to get a highly accurate circle of elements and the faces on their surface.
 
-For an *xy* search, an element with centroid $\mathbf{c}$ is retained when
+![Elements](elements.png)
 
-$$
-(c_x-q_x)^2+(c_y-q_y)^2 \le r^2,
-$$
-
-where $\mathbf{q}$ is the search center and $r$ is the radius. Ignoring the third coordinate makes this a cylindrical search through the mesh rather than a spherical one. Using centroids is fast, despite the boundary changing slightly with mesh density.
-
-
-Each element type has a different local face definition, so *eTypeToFaceIndex* maps every face to its local node indices. For the first three corner positions $\mathbf{p}_0$, $\mathbf{p}_1$, and $\mathbf{p}_2$, the unit normal is
-
-$$
-\hat{\mathbf{n}}=
-\frac{(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)}
-{\left\|(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)\right\|}
-$$
-
-The node order matters because reversing it reverses the normal. The face matches a target direction $\hat{\mathbf{g}}$ when
-
-$$
-\left|\hat{\mathbf{n}}\cdot\hat{\mathbf{g}}-1\right|<10^{-3}.
-$$
-
-Because the test is near \(+1\), it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly \(2.6^\circ\). The resulting element IDs and local face numbers can be assigned directly to a *MeshElementFaces* selection.
-
-The final loop advances the search center in \(x\), creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.
+The math behind the code can be found at the end of this page!
 
 ```python
 import numpy as np
@@ -187,49 +165,34 @@ def getFaceSelectionAtCoords(
     return createFaceSelection(elements, targetFaceVector)
 
 
-def setHeatFlow(heatFlow, times, heats):
-    heatFlow.Magnitude.Inputs[0].DiscreteValues = [
-        Quantity(time, "s") for time in times
-    ]
-    heatFlow.Magnitude.Output.DiscreteValues = [
-        Quantity(heat, "W") for heat in heats
-    ]
-
-
-globals().update(locals())
-
-analysis = Model.Analyses[0]
-meshData = getMeshData(
-    Model.NamedSelections.Children[0],
-    analysis.MeshData
-)
-
-nSteps = 10
-deltaT = 1
-coords = np.array([0.0, 0.0, 0.0])
-timeSteps = [step * deltaT for step in range(nSteps)]
-
-settings = analysis.AnalysisSettings
-settings.NumberOfSteps = 1
-settings.CurrentStepNumber = 1
-settings.StepEndTime = Quantity(nSteps * deltaT, "s")
-
-for step in range(nSteps):
-    faceSelection = getFaceSelectionAtCoords(
-        meshData,
-        coords,
-        0.01,
-        [0, 0, 1]
-    )
-    coords = coords + [0.015, 0, 0]
-
-    heatFlow = analysis.AddHeatFlow()
-    heatFlow.Name = "Custom Heat Flow " + str(step)
-    heatFlow.Location = faceSelection
-
-    heatValues = [
-        2000 if timeIndex == step else 0
-        for timeIndex in range(nSteps)
-    ]
-    setHeatFlow(heatFlow, timeSteps, heatValues)
 ```
+
+### Math behind the code
+
+
+For an *xy* search, an element with centroid $\mathbf{c}$ is obtained when
+
+$$
+(c_x-q_x)^2+(c_y-q_y)^2 \le r^2,
+$$
+
+where $\mathbf{q}$ is the search center and $r$ is the radius. Ignoring the third coordinate makes this a cylindrical search through the mesh rather than a spherical one.
+
+
+Each element type has a different local face definition, so *eTypeToFaceIndex* maps every face to its local node indices. For the first three corner positions $\mathbf{p}_0$, $\mathbf{p}_1$, and $\mathbf{p}_2$, the unit normal is
+
+$$
+\hat{\mathbf{n}}=
+\frac{(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)}
+{\left\|(\mathbf{p}_1-\mathbf{p}_0)\times(\mathbf{p}_2-\mathbf{p}_0)\right\|}
+$$
+
+The node order matters because reversing it reverses the normal. The face matches a target direction $\hat{\mathbf{g}}$ when
+
+$$
+\left|\hat{\mathbf{n}}\cdot\hat{\mathbf{g}}-1\right|<10^{-3}.
+$$
+
+Because the test is near \(+1\), it accepts faces pointing with the target vector, not against it. The tolerance corresponds to roughly \(2.6^\circ\). The resulting element IDs and local face numbers can be assigned directly to a *MeshElementFaces* selection.
+
+The final loop advances the search center in \(x\), creates one heat-flow object at each location, and gives each object a 2000 W peak at its matching time point. Mechanical interpolates between the tabular values, so additional points are needed if a square pulse is required.
