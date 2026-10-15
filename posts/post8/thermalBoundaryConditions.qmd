@@ -43,11 +43,11 @@ def checkEnd(s):
 T2 = 12
 T1 = 0
 
-ntc2 = getRow(r'D:\KLA\kla Backplane Thermal_files\user_files\\NTC_system7.txt', T2)
-ntc1 = getRow(r'D:\KLA\kla Backplane Thermal_files\user_files\\NTC_system7.txt', T1)
+ntc2 = getRow(r'FILENAME', T2)
+ntc1 = getRow(r'FILENAME', T1)
 
-rtd2 = getRow(r'D:\KLA\kla Backplane Thermal_files\user_files\\RTD_system7.txt', T2)
-rtd1 = getRow(r'D:\KLA\kla Backplane Thermal_files\user_files\\RTD_system7.txt', T1)
+rtd2 = getRow(r'FILENAME', T2)
+rtd1 = getRow(r'FILENAME', T1)
 
 for x in a:
     for y in a.Children:
