@@ -2,7 +2,7 @@
 title: "Finding Mode Shapes and Participation Factors of Multiple Solutions"
 description: "Over a sequence of positions using data from an external file"
 last-edited: 2026-10-12
-favorite: false
+favorite: true
 ---
 
 # Finding Mode Shapes and Participation Factors of Multiple Solutions Over a Sequence
