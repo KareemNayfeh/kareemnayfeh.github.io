@@ -10,7 +10,7 @@ When analyzing heat transfer in ANSYS, there is often times a need to consider t
 ![Bar and cube 13.8 micrometers apart](tcc.png)
 
 
-```apdl
+```fortran
 k_air = 0.026 ! thermal conductivity of air near room temp (W/m-K)
 h_max = 5e4  ! full contact thermal contact conductance (W/m^2-K)
 g_max = 5e-3 ! max gap over which to construct the table (m)

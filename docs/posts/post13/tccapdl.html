@@ -27,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -140,31 +175,30 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Bar and cube 13.8 micrometers apart</figcaption>
 </figure>
 </div>
-<pre class="apdl"><code>k_air = 0.026 ! thermal conductivity of air near room temp (W/m-K)
-h_max = 5e4  ! full contact thermal contact conductance (W/m^2-K)
-g_max = 5e-3 ! max gap over which to construct the table (m)
-n_tcc = 60 ! number of points to include in the table
-
-g_cap = k_air/h_max ! this is the gap below which to hold at g_max
-
-*del,tcc_tab,,nopr
-*dim,tcc_tab,table,n_tcc+1,1,1,GAP
-
-! Open gap is negative: rows run from -g_max up to -g_cap
-*do,i,1,n_tcc
-    ! power-law spacing of gap entries in the tabke
-    g = g_max*(g_cap/g_max)**((i-1)/(n_tcc-1)) 
-    tcc_tab(i,0) = -g  ! gap is negative in ansys convension
-    tcc_tab(i,1) = k_air/g  ! contact conductivity W/m^2-K 
-*enddo
-
-tcc_tab(n_tcc+1,0) = 1.0  ! ansys positive gap is actually pushed together
-tcc_tab(n_tcc+1,1) = h_max  ! saturate at max contact conductivity
-
-rmodif,cid,14,%tcc_tab%
-nldiag,cont,on
-
-</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode fortran code-with-copy"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>k_air <span class="kw">=</span> <span class="fl">0.026</span> <span class="co">! thermal conductivity of air near room temp (W/m-K)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>h_max <span class="kw">=</span> <span class="fl">5e4</span>  <span class="co">! full contact thermal contact conductance (W/m^2-K)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>g_max <span class="kw">=</span> <span class="fl">5e-3</span> <span class="co">! max gap over which to construct the table (m)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>n_tcc <span class="kw">=</span> <span class="dv">60</span> <span class="co">! number of points to include in the table</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>g_cap <span class="kw">=</span> k_air<span class="kw">/</span>h_max <span class="co">! this is the gap below which to hold at g_max</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">*del,tcc_tab,,nopr</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">*dim,tcc_tab,table,n_tcc+1,1,1,GAP</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">! Open gap is negative: rows run from -g_max up to -g_cap</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">*do,i,1,n_tcc</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">! power-law spacing of gap entries in the tabke</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    g <span class="kw">=</span> g_max<span class="kw">*</span>(g_cap<span class="kw">/</span>g_max)<span class="kw">**</span>((i<span class="kw">-</span><span class="dv">1</span>)<span class="kw">/</span>(n_tcc<span class="kw">-</span><span class="dv">1</span>)) </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    tcc_tab(i,<span class="dv">0</span>) <span class="kw">=</span> <span class="kw">-</span>g  <span class="co">! gap is negative in ansys convension</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    tcc_tab(i,<span class="dv">1</span>) <span class="kw">=</span> k_air<span class="kw">/</span>g  <span class="co">! contact conductivity W/m^2-K </span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">*enddo</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>tcc_tab(n_tcc<span class="kw">+</span><span class="dv">1</span>,<span class="dv">0</span>) <span class="kw">=</span> <span class="fl">1.0</span>  <span class="co">! ansys positive gap is actually pushed together</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>tcc_tab(n_tcc<span class="kw">+</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="kw">=</span> h_max  <span class="co">! saturate at max contact conductivity</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>rmodif,cid,<span class="dv">14</span>,<span class="op">%</span>tcc_tab<span class="op">%</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>nldiag,cont,on</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The tcc table is set up so that at smaller values, the steps are closer together as any function depending on an inverse asymptotically approaches zero as the independant variable increases.</p>
 
 
