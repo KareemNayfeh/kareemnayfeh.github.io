@@ -3,7 +3,6 @@ title: "Designing Passive Magnetic Springs with Energy-Based Models"
 description: "How analytical energy estimates, 2D and 3D field models, and a cylindrical experiment clarify the design of nearly constant-force magnetic springs"
 last-edited: 2026-10-04
 favorite: true
-image: magnetic-spring-experiment.png
 ---
 
 # Overview of Passive Magnetic Springs
