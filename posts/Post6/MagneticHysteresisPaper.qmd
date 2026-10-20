@@ -8,9 +8,15 @@ image: magnetic-spring-experiment.png
 
 # Overview
 
-A vertical actuator under load should not have to be supplying energy given that a passive spring is handling this static load. The actuator should be left to handle disturbances and changes in motion. While conventional springs accomplish this, their force varies with displacement; a magnetic spring, however, may provide a constant, contactless force over a range of travel.
+In precision machines, there are many places where a constant force is required. An example of this is a vertical stage, where the actuator should not have to carry weight (load) but should instead be suppressing disturbances/accelerations. Some conventional methods include mechanical springs, counterweights, and pneumatics; but these methods have their own dynamics and are not suitable for precision motion---especially in a vacuum chamber.
 
-By looking at the difference in energy between two bodies, one inside a tube and one outside, we may estimate force. From this estimation, a design model can be made before performing analysis on it using FEMM, then finally performing a physical experiment.
+An eleagant solution is to provide this force from a permanent magnet; by placing a horizontally poled (Fig. 1) magnet into a ferro-magnetic tube, a nearly constant force may be obtained over a majority of the length of overlap as shown (excluding entrance/exit).
+
+The magnetic field near the ends of the magnet and iron is a complicated 3d distribution, but we can develop a simple expression for the force produced over a majority of the travel by considering the difference among energies in 2 different crosssections of the system.
+
+For every distance $ du $ that the magnet is pulled out of the tube, the energy increases by the difference between the energy in the lower and upper section as can be seen in Fig. 1. The energy in the external magnet can be found from known formulas, or from a 2d FEA. The energy in a crosssection within the tube can be estimated from a magnetic circuit, or from 2d FEA. The difference between these energies per $ du $ is the force. 
+
+The details of this analysis (for this case and several others) is shown in the [conference paper](https://mechanicsandmachines.com/?p=777){target="_blank"} [FEA analysis](../post5/femmWrapper.qmd)
 
 
 ### The design problem

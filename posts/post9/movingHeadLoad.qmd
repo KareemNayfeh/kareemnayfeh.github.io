@@ -11,7 +11,7 @@ Often times when analysing a moving load, it becomes extremely tedious to move s
 
 ![A heat load moving in a circular manner on a flat plate](movingHeat.png)
 
-*Note: the logic behind the element face selection process can be found [here](elementFaceSelection.qmd)*
+*Note: the logic behind the element face selection process can be found [here](../post7/elementFaceSelection.qmd)*
 
 ```python
 import numpy as np
