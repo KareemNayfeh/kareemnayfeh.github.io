@@ -8,15 +8,14 @@ image: magnetic-spring-experiment.png
 
 # Overview of Passive Magnetic Springs
 
-In precision machines, there are many places where a constant force is required. An example of this is a vertical stage, where the actuator should not have to carry weight (load) but should instead be suppressing disturbances/accelerations. Some conventional methods include mechanical springs, counterweights, and pneumatics; but these methods have their own dynamics and are not suitable for precision motion---especially in a vacuum chamber.
+In precision machines, there are many places where a constant force is required. An example of this is a vertical stage, where the actuator should not have to carry a load, but should instead be suppressing disturbances/accelerations. Some conventional methods include mechanical springs, counterweights, and pneumatics, but come at the cost of their own dynamics. Additionally, they cannot be used in a vacuum chamber.
 
-An eleagant solution is to provide this force from a permanent magnet; by placing a horizontally poled (Fig. 1) magnet into a ferro-magnetic tube, a nearly constant force may be obtained over a majority of the length of overlap as shown (excluding entrance/exit).
+An elegant solution is to provide this force from a permanent magnet: by placing a horizontally poled magnet into a ferro-magnetic tube (Fig. 1), a nearly constant force may be obtained over a majority of the length.
 
-The magnetic field near the ends of the magnet and iron is a complicated 3d distribution, but we can develop a simple expression for the force produced over a majority of the travel by considering the difference among energies in 2 different crosssections of the system.
+The magnetic field near the ends of the magnet and iron becomes a complicated 3d distribution, but a simple expression can be developed for the force produced over a majority of the travel. The easiest way, is by considering the difference between energies in 2 crosssections of the system.
 
-For every distance $ du $ that the magnet is pulled out of the tube, the energy increases by the difference between the energy in the lower and upper section as can be seen in Fig. 1. The energy in the external magnet can be found from known formulas, or from a 2d FEA. The energy in a crosssection within the tube can be estimated from a magnetic circuit, or from 2d FEA. The difference between these energies per $ du $ is the force. 
+For every distance du that the magnet is displaced out of the tube, the work done is the difference between the energy in the lower and upper section (Fig. 1). The energy in the cross section of the magnet outside the tube can be found from known formulas. The energy in a crosssection within the tube can be estimated from a magnetic circuit. The difference between these energies per du is the force.
 
-The details of this analysis (for this case and several others) is shown in the [conference paper](https://mechanicsandmachines.com/?p=777){target="_blank"}. For that paper, I developed a [python FEMM wrapper](../post5/femmWrapper.qmd) for 2d FEA.
-
+An alternative to the methods above is to use 2d FEA for the cross section. I developed a [python FEMM wrapper](../post5/femmWrapper.qmd) for a 2d FEA simulation and used it to generate many of the results in the [conference paper](https://mechanicsandmachines.com/?p=777){target="_blank"}. 
 
 ![A long magnet entering a tube shown divided into two-dimensional cross-sectional regions. The plots are analytical and simulation tools, not measurements.](magnetic-spring-sections.png){#fig-sections width=100% fig-alt="Presentation slide showing a rectangular magnet entering an iron tube, three cross-sectional regions, a magnetic circuit, and two-dimensional flux plots."}
