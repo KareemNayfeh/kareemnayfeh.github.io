@@ -168,13 +168,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>When analyzing heat transfer in ANSYS, there is often times a need to consider thermal conductivity accounting for the conductivity of air despite it being so small. In this case, the bar and cube (10 mm x 10 mm x 20 mm and 10 mm x 10 mm x 10mm) are steel and held at 23 and 22 degrees respectively. Across a small gap, the conduction is not negligible, but may not be treated as if they were touching.</p>
+<p>When analyzing heat transfer in ANSYS, there often a need to consider thermal conductivity across air gaps that may form in a model. In the example below, the bar and cube (10 mm x 10 mm x 20 mm and 10 mm x 10 mm x 10mm) are steel and have their ends held at 23 and 22 degrees respectively. Across a small gap, the conduction is not negligible, but should not be treated as if they were touching.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="tcc.png" class="img-fluid figure-img"></p>
 <figcaption>Bar and cube 13.8 micrometers apart</figcaption>
 </figure>
 </div>
+<p>The APDL snippet below can be inserted into a contact in ANSYS Mechanical to make the conductivity across the the contact inversely proportional to gap.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode fortran code-with-copy"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>k_air <span class="kw">=</span> <span class="fl">0.026</span> <span class="co">! thermal conductivity of air near room temp (W/m-K)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>h_max <span class="kw">=</span> <span class="fl">5e4</span>  <span class="co">! full contact thermal contact conductance (W/m^2-K)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>g_max <span class="kw">=</span> <span class="fl">5e-3</span> <span class="co">! max gap over which to construct the table (m)</span></span>

@@ -7,7 +7,7 @@ favorite: true
 
 # Measurements of Magnetic-Force Hysteresis in a Passive Magnetic Spring
 
-As described in another [post](../post6/MagneticHysteresisPaper.qmd), I helped develop models for force in magnetic springs formed by a magnet in a metal tube.
+As described in another [post](../Post6/MagneticHysteresisPaper.qmd), I helped develop models for force in magnetic springs formed by a magnet in a metal tube.
 
 The figure below shows the setup and measurement result for a circular magnet in a steel tube with a comparison to the simplified model (2d FEA) as well as a 3d FEA.
 
